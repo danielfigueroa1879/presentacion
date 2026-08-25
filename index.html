@@ -48,10 +48,10 @@
             font-family: 'Inter', sans-serif;
             color: var(--text-main);
             min-height: 100vh;
-            /* Fondo: pared de madera oscura (paneles de nogal) */
+            /* Fondo: pared de madera cálida bien iluminada */
             background:
-                radial-gradient(ellipse at 50% 12%, rgba(120,70,35,0.35) 0%, transparent 60%),
-                linear-gradient(180deg, #2a1408 0%, #1a0d05 60%, #0a0503 100%);
+                radial-gradient(ellipse at 50% 12%, rgba(255,190,110,0.55) 0%, rgba(180,110,55,0.25) 35%, transparent 65%),
+                linear-gradient(180deg, #5a2f14 0%, #3a1c0c 55%, #2a1408 100%);
             transition: background 0.6s ease, color 0.6s ease;
             position: relative;
         }
@@ -69,19 +69,19 @@
             z-index: -3;
             background-image:
                 /* Vetas horizontales sutiles (nogal veteado) */
-                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='600' viewBox='0 0 400 600'><defs><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9 0.02' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 0.10 0 0 0 0 0.05 0 0 0 0 0.02 0 0 0 0.35 0'/></filter></defs><rect width='400' height='600' filter='url(%23n)'/></svg>"),
+                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='600' viewBox='0 0 400 600'><defs><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9 0.02' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 0.18 0 0 0 0 0.09 0 0 0 0 0.04 0 0 0 0.3 0'/></filter></defs><rect width='400' height='600' filter='url(%23n)'/></svg>"),
                 /* Separación de paneles verticales */
                 repeating-linear-gradient(90deg,
                     transparent 0,
                     transparent 179px,
-                    rgba(0,0,0,0.55) 179px,
-                    rgba(0,0,0,0.75) 180px,
-                    rgba(180,120,70,0.15) 181px,
+                    rgba(0,0,0,0.35) 179px,
+                    rgba(0,0,0,0.5) 180px,
+                    rgba(220,160,100,0.28) 181px,
                     transparent 183px),
-                /* Base warm walnut */
-                linear-gradient(180deg, #3a1c0c 0%, #2a1408 45%, #1a0d05 100%);
+                /* Base warm walnut iluminado */
+                linear-gradient(180deg, #6b3a1c 0%, #4a2510 50%, #3a1c0c 100%);
             background-size: 400px 600px, auto, auto;
-            opacity: 0.95;
+            opacity: 0.92;
         }
         html.light .wood-wall {
             background:
@@ -97,28 +97,39 @@
             background-size: 400px 600px, auto, auto;
         }
 
-        /* Halo cálido de lámpara sobre la pared */
+        /* Halo cálido de lámpara sobre la pared — más intenso */
         .ambient {
             position: fixed;
-            top: -25%;
+            top: -20%;
             left: 50%;
             transform: translateX(-50%);
-            width: 100%;
-            max-width: 1100px;
-            height: 70vh;
-            background: radial-gradient(ellipse at center, rgba(255,190,110,0.35) 0%, rgba(255,150,60,0.12) 40%, transparent 70%);
+            width: 120%;
+            max-width: 1400px;
+            height: 90vh;
+            background: radial-gradient(ellipse at center, rgba(255,210,140,0.65) 0%, rgba(255,170,80,0.32) 30%, rgba(255,140,50,0.12) 55%, transparent 75%);
             pointer-events: none;
             z-index: -2;
-            filter: blur(30px);
+            filter: blur(28px);
         }
 
-        /* Sutil viñeta oscura */
+        /* Segunda fuente de luz — brillo lateral suave */
+        .ambient-side {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -2;
+            background:
+                radial-gradient(circle at 15% 30%, rgba(255,200,130,0.22) 0%, transparent 40%),
+                radial-gradient(circle at 85% 35%, rgba(255,200,130,0.22) 0%, transparent 40%);
+        }
+
+        /* Viñeta muy sutil (para no oscurecer) */
         .vignette {
             position: fixed;
             inset: 0;
             pointer-events: none;
             z-index: -1;
-            background: radial-gradient(ellipse at 50% 40%, transparent 40%, rgba(0,0,0,0.55) 100%);
+            background: radial-gradient(ellipse at 50% 45%, transparent 55%, rgba(0,0,0,0.28) 100%);
         }
 
         /* ===== TOGGLE ===== */
@@ -154,19 +165,19 @@
             text-align: center;
             border-radius: 6px;
             position: relative;
-            /* Placa de bronce pulido */
+            /* Placa de bronce pulido iluminada */
             background:
                 linear-gradient(180deg,
-                    #4a2a12 0%,
-                    #3a1e0a 25%,
-                    #2a1408 100%);
-            border: 1px solid rgba(201,169,97,0.5);
+                    #6b3a1c 0%,
+                    #4a2a12 45%,
+                    #3a1e0a 100%);
+            border: 1px solid rgba(242,212,120,0.7);
             box-shadow:
-                0 20px 45px rgba(0,0,0,0.75),
-                0 8px 15px rgba(0,0,0,0.5),
-                inset 0 1px 0 rgba(242,212,120,0.4),
-                inset 0 -2px 6px rgba(0,0,0,0.6),
-                0 0 60px rgba(201,169,97,0.18);
+                0 20px 45px rgba(0,0,0,0.55),
+                0 8px 15px rgba(0,0,0,0.35),
+                inset 0 1px 0 rgba(255,230,150,0.55),
+                inset 0 -2px 6px rgba(0,0,0,0.45),
+                0 0 90px rgba(242,212,120,0.35);
             z-index: 5;
         }
         html.light .brand-plaque {
@@ -246,17 +257,18 @@
             height: 18px;
             background:
                 linear-gradient(180deg,
-                    rgba(0,0,0,0.5) 0%,
-                    #6b3a1c 15%,
-                    #8b5a2e 35%,
-                    #b07a45 50%,
-                    #6b3a1c 70%,
-                    #2a1408 90%,
-                    rgba(0,0,0,0.7) 100%);
+                    rgba(0,0,0,0.35) 0%,
+                    #8b5a2e 15%,
+                    #b07a45 35%,
+                    #d99b60 50%,
+                    #8b5a2e 70%,
+                    #4a250f 90%,
+                    rgba(0,0,0,0.5) 100%);
             box-shadow:
-                0 6px 15px rgba(0,0,0,0.7),
-                inset 0 1px 0 rgba(242,212,120,0.5),
-                inset 0 -1px 2px rgba(0,0,0,0.6);
+                0 6px 15px rgba(0,0,0,0.5),
+                inset 0 1px 0 rgba(255,230,160,0.7),
+                inset 0 -1px 2px rgba(0,0,0,0.5),
+                0 0 25px rgba(242,212,120,0.25);
             border-radius: 2px;
         }
 
@@ -598,20 +610,20 @@
             height: 44px;
             background:
                 /* Vetas de nogal pulido */
-                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='60' viewBox='0 0 800 60'><defs><filter id='wood'><feTurbulence type='fractalNoise' baseFrequency='3 0.05' numOctaves='3' seed='11'/><feColorMatrix values='0 0 0 0 0.10 0 0 0 0 0.04 0 0 0 0 0.01 0 0 0 0.6 0'/></filter></defs><rect width='800' height='60' filter='url(%23wood)'/></svg>"),
+                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='60' viewBox='0 0 800 60'><defs><filter id='wood'><feTurbulence type='fractalNoise' baseFrequency='3 0.05' numOctaves='3' seed='11'/><feColorMatrix values='0 0 0 0 0.16 0 0 0 0 0.07 0 0 0 0 0.02 0 0 0 0.55 0'/></filter></defs><rect width='800' height='60' filter='url(%23wood)'/></svg>"),
                 /* Brillo superior (barniz) */
                 linear-gradient(180deg,
-                    rgba(255,220,150,0.15) 0%,
-                    transparent 20%,
+                    rgba(255,230,160,0.35) 0%,
+                    rgba(255,220,150,0.08) 25%,
                     transparent 100%),
-                /* Base madera oscura */
-                linear-gradient(180deg, #6b3a1c 0%, #4a250f 30%, #2e1608 70%, #1a0d05 100%);
+                /* Base madera cálida iluminada */
+                linear-gradient(180deg, #8b5a2e 0%, #6b3a1c 30%, #4a250f 70%, #3a1c0c 100%);
             background-size: 800px 60px, auto, auto;
             box-shadow:
-                inset 0 4px 10px rgba(0,0,0,0.7),
-                inset 0 -1px 0 rgba(255,220,150,0.15),
-                0 -3px 20px rgba(201,169,97,0.25),
-                0 15px 35px rgba(0,0,0,0.75);
+                inset 0 4px 10px rgba(0,0,0,0.5),
+                inset 0 -1px 0 rgba(255,220,150,0.25),
+                0 -3px 30px rgba(242,212,120,0.4),
+                0 15px 35px rgba(0,0,0,0.55);
             position: relative;
         }
         /* Reflejo tenue del barniz */
@@ -632,25 +644,26 @@
             position: relative;
             background:
                 /* Vetas verticales sutiles */
-                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='400' viewBox='0 0 300 400'><defs><filter id='v'><feTurbulence type='fractalNoise' baseFrequency='0.03 2' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.06 0 0 0 0 0.02 0 0 0 0 0.01 0 0 0 0.4 0'/></filter></defs><rect width='300' height='400' filter='url(%23v)'/></svg>"),
+                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='400' viewBox='0 0 300 400'><defs><filter id='v'><feTurbulence type='fractalNoise' baseFrequency='0.03 2' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.10 0 0 0 0 0.04 0 0 0 0 0.01 0 0 0 0.35 0'/></filter></defs><rect width='300' height='400' filter='url(%23v)'/></svg>"),
                 /* Paneles tallados (marcos rectangulares) */
                 repeating-linear-gradient(90deg,
                     transparent 0,
                     transparent calc(33.33% - 3px),
-                    rgba(0,0,0,0.55) calc(33.33% - 3px),
-                    rgba(0,0,0,0.7) calc(33.33% - 1px),
-                    rgba(201,169,97,0.15) calc(33.33% - 0.5px),
+                    rgba(0,0,0,0.4) calc(33.33% - 3px),
+                    rgba(0,0,0,0.55) calc(33.33% - 1px),
+                    rgba(242,212,120,0.28) calc(33.33% - 0.5px),
                     transparent calc(33.33% + 2px),
                     transparent 33.33%),
-                linear-gradient(180deg, #2e1608 0%, #4a250f 40%, #3a1c0c 100%);
+                linear-gradient(180deg, #4a250f 0%, #6b3a1c 40%, #4a250f 100%);
             background-size: 300px 400px, auto, auto;
             padding: 28px 16px 28px;
             box-shadow:
-                inset 0 8px 20px rgba(0,0,0,0.75),
-                inset 0 -3px 8px rgba(0,0,0,0.6);
+                inset 0 8px 20px rgba(0,0,0,0.55),
+                inset 0 -3px 8px rgba(0,0,0,0.45),
+                inset 0 1px 0 rgba(255,220,150,0.2);
             border-radius: 0 0 6px 6px;
             min-height: 240px;
-            border-bottom: 4px solid #0a0503;
+            border-bottom: 4px solid #1a0d05;
         }
         /* Molduras horizontales del panel */
         .desk-front::before {
@@ -701,12 +714,13 @@
             overflow: hidden;
             position: relative;
             box-shadow:
-                0 0 0 3px #c9a961,
-                0 0 0 6px #2a1810,
-                0 0 0 8px #f2d478,
-                0 0 40px rgba(242,212,120,0.4),
-                0 0 80px rgba(255,180,90,0.25),
-                0 25px 45px rgba(0,0,0,0.75);
+                0 0 0 3px #f2d478,
+                0 0 0 6px #3a1c0c,
+                0 0 0 8px #ffe28c,
+                0 0 55px rgba(255,220,140,0.7),
+                0 0 110px rgba(255,180,90,0.45),
+                0 0 180px rgba(255,150,60,0.25),
+                0 25px 45px rgba(0,0,0,0.55);
             transition: transform 0.4s;
             background: #2a1810;
         }
@@ -952,6 +966,7 @@
 
     <div class="wood-wall"></div>
     <div class="ambient"></div>
+    <div class="ambient-side"></div>
     <div class="vignette"></div>
 
     <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
