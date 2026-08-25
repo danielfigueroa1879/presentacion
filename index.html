@@ -279,7 +279,15 @@
             padding-top: 10px;
         }
         @media (min-width: 768px) {
-            .frames-grid { grid-template-columns: repeat(3, 1fr); gap: 36px; padding-top: 20px; }
+            .frames-grid {
+                grid-template-columns: repeat(6, 1fr);
+                gap: 36px;
+                padding-top: 20px;
+            }
+            .frames-grid > .diploma-unit { grid-column: span 2; }
+            /* Última fila de 2 marcos centrados dentro de la grilla de 6 columnas */
+            .frames-grid > .diploma-unit:nth-child(4) { grid-column: 2 / span 2; }
+            .frames-grid > .diploma-unit:nth-child(5) { grid-column: 4 / span 2; }
         }
 
         /* Marco de madera tallado — nogal con moldura ornamental */
@@ -1055,6 +1063,52 @@
                             <span class="rivet r-br"></span>
                             <p class="plaque-tag">Diplomado</p>
                             <h2 class="plaque-title">Gestión de Seguridad Privada</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cuadro 4: Diplomado Ciberseguridad -->
+                <div class="diploma-unit" onclick="toggleZoom(this, event)">
+                    <div class="diploma-frame">
+                        <div class="diploma-content">
+                            <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
+                            <div class="diploma-image-wrap">
+                                <img src="images/DiplomadoCibserguridad.png" alt="Diplomado en Ciberseguridad"
+                                     onerror="this.style.display='none'">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="leather-plaque">
+                        <div class="leather-patch">
+                            <span class="rivet r-tl"></span>
+                            <span class="rivet r-tr"></span>
+                            <span class="rivet r-bl"></span>
+                            <span class="rivet r-br"></span>
+                            <p class="plaque-tag">Diplomado</p>
+                            <h2 class="plaque-title">Ciberseguridad</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cuadro 5: Reconocimiento 20 años -->
+                <div class="diploma-unit" onclick="toggleZoom(this, event)">
+                    <div class="diploma-frame">
+                        <div class="diploma-content">
+                            <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
+                            <div class="diploma-image-wrap">
+                                <img src="images/20años.png" alt="Reconocimiento 20 años de trayectoria"
+                                     onerror="this.style.display='none'">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="leather-plaque">
+                        <div class="leather-patch">
+                            <span class="rivet r-tl"></span>
+                            <span class="rivet r-tr"></span>
+                            <span class="rivet r-bl"></span>
+                            <span class="rivet r-br"></span>
+                            <p class="plaque-tag">Reconocimiento</p>
+                            <h2 class="plaque-title">20 Años de Trayectoria</h2>
                         </div>
                     </div>
                 </div>
