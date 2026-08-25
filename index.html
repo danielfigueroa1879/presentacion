@@ -1,1 +1,1197 @@
-<h1>hola</h1>
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daniel Figueroa | Oficina Virtual</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Playfair+Display:wght@600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+    <style>
+        :root {
+            /* Paleta de nogal/caoba pulido */
+            --walnut-deep: #1a0d05;
+            --walnut-dark: #2e1608;
+            --walnut-mid: #4a250f;
+            --walnut-warm: #6b3a1c;
+            --walnut-light: #8b5a2e;
+            --walnut-highlight: #b07a45;
+            --mahogany: #5c2010;
+            --gold: #c9a961;
+            --gold-bright: #f2d478;
+            --gold-deep: #8b6914;
+            --brass: #b8860b;
+            --brass-shine: #ffdb70;
+            --cyan: #22d3ee;
+            --parchment: #f5ecd7;
+            --text-main: #f5ecd7;
+        }
+
+        html.light {
+            --walnut-deep: #7a4a25;
+            --walnut-dark: #8b5a2b;
+            --walnut-mid: #a67548;
+            --walnut-warm: #b8865a;
+            --walnut-light: #c99a70;
+            --text-main: #3b2416;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text-main);
+            min-height: 100vh;
+            /* Fondo: pared de madera oscura (paneles de nogal) */
+            background:
+                radial-gradient(ellipse at 50% 12%, rgba(120,70,35,0.35) 0%, transparent 60%),
+                linear-gradient(180deg, #2a1408 0%, #1a0d05 60%, #0a0503 100%);
+            transition: background 0.6s ease, color 0.6s ease;
+            position: relative;
+        }
+
+        html.light body {
+            background:
+                radial-gradient(ellipse at 50% 12%, rgba(255,235,200,0.5) 0%, transparent 60%),
+                linear-gradient(180deg, #d9b98a 0%, #a67c52 60%, #7a5535 100%);
+        }
+
+        /* ===== PARED DE MADERA (paneles verticales con vetas) ===== */
+        .wood-wall {
+            position: fixed;
+            inset: 0;
+            z-index: -3;
+            background-image:
+                /* Vetas horizontales sutiles (nogal veteado) */
+                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='600' viewBox='0 0 400 600'><defs><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9 0.02' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 0.10 0 0 0 0 0.05 0 0 0 0 0.02 0 0 0 0.35 0'/></filter></defs><rect width='400' height='600' filter='url(%23n)'/></svg>"),
+                /* Separación de paneles verticales */
+                repeating-linear-gradient(90deg,
+                    transparent 0,
+                    transparent 179px,
+                    rgba(0,0,0,0.55) 179px,
+                    rgba(0,0,0,0.75) 180px,
+                    rgba(180,120,70,0.15) 181px,
+                    transparent 183px),
+                /* Base warm walnut */
+                linear-gradient(180deg, #3a1c0c 0%, #2a1408 45%, #1a0d05 100%);
+            background-size: 400px 600px, auto, auto;
+            opacity: 0.95;
+        }
+        html.light .wood-wall {
+            background:
+                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='600' viewBox='0 0 400 600'><defs><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9 0.02' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.20 0 0 0 0 0.08 0 0 0 0.28 0'/></filter></defs><rect width='400' height='600' filter='url(%23n)'/></svg>"),
+                repeating-linear-gradient(90deg,
+                    transparent 0,
+                    transparent 179px,
+                    rgba(90,50,20,0.4) 179px,
+                    rgba(90,50,20,0.55) 180px,
+                    rgba(255,220,170,0.3) 181px,
+                    transparent 183px),
+                linear-gradient(180deg, #d9b98a 0%, #b8865a 45%, #96683a 100%);
+            background-size: 400px 600px, auto, auto;
+        }
+
+        /* Halo cálido de lámpara sobre la pared */
+        .ambient {
+            position: fixed;
+            top: -25%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 1100px;
+            height: 70vh;
+            background: radial-gradient(ellipse at center, rgba(255,190,110,0.35) 0%, rgba(255,150,60,0.12) 40%, transparent 70%);
+            pointer-events: none;
+            z-index: -2;
+            filter: blur(30px);
+        }
+
+        /* Sutil viñeta oscura */
+        .vignette {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background: radial-gradient(ellipse at 50% 40%, transparent 40%, rgba(0,0,0,0.55) 100%);
+        }
+
+        /* ===== TOGGLE ===== */
+        .theme-toggle {
+            position: fixed;
+            top: 16px; right: 16px;
+            z-index: 100;
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(145deg, #3a1f10, #1a0a04);
+            border: 1px solid rgba(201,169,97,0.55);
+            color: #f2d478;
+            font-size: 22px;
+            cursor: pointer;
+            box-shadow:
+                0 6px 16px rgba(0,0,0,0.7),
+                inset 0 1px 0 rgba(242,212,120,0.35),
+                inset 0 -2px 4px rgba(0,0,0,0.5);
+            transition: transform 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .theme-toggle:hover { transform: scale(1.08) rotate(-6deg); }
+        html.light .theme-toggle {
+            background: linear-gradient(145deg, #f5ecd7, #d9b98a);
+            color: #6b4423;
+        }
+
+        /* ===== PLACA DE BRONCE CON NOMBRE ===== */
+        .brand-plaque {
+            max-width: 680px;
+            margin: 36px auto 20px;
+            padding: 22px 34px;
+            text-align: center;
+            border-radius: 6px;
+            position: relative;
+            /* Placa de bronce pulido */
+            background:
+                linear-gradient(180deg,
+                    #4a2a12 0%,
+                    #3a1e0a 25%,
+                    #2a1408 100%);
+            border: 1px solid rgba(201,169,97,0.5);
+            box-shadow:
+                0 20px 45px rgba(0,0,0,0.75),
+                0 8px 15px rgba(0,0,0,0.5),
+                inset 0 1px 0 rgba(242,212,120,0.4),
+                inset 0 -2px 6px rgba(0,0,0,0.6),
+                0 0 60px rgba(201,169,97,0.18);
+            z-index: 5;
+        }
+        html.light .brand-plaque {
+            background: linear-gradient(180deg, #f5ecd7 0%, #e5d5b0 100%);
+            border-color: rgba(139,105,20,0.55);
+        }
+        /* Tornillos decorativos en las esquinas */
+        .brand-plaque::before, .brand-plaque::after {
+            content: '';
+            position: absolute;
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ffdb70 0%, #c9a961 40%, #6b4423 100%);
+            box-shadow:
+                inset -1px -1px 2px rgba(0,0,0,0.7),
+                inset 1px 1px 1px rgba(255,255,255,0.5),
+                0 1px 3px rgba(0,0,0,0.8);
+        }
+        .brand-plaque::before { top: 8px; left: 8px; }
+        .brand-plaque::after { top: 8px; right: 8px; }
+
+        .brand-ornament {
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            margin-bottom: 8px;
+        }
+        .brand-ornament .line {
+            height: 1px; width: 70px;
+            background: linear-gradient(90deg, transparent, #c9a961, transparent);
+        }
+        .brand-ornament i { color: #f2d478; font-size: 22px; text-shadow: 0 0 12px rgba(242,212,120,0.6); }
+        .brand-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.2rem, 3.4vw, 2.1rem);
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            background: linear-gradient(180deg, #ffdb70 0%, #c9a961 45%, #8b6914 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            white-space: nowrap;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        @media (max-width: 480px) {
+            .brand-title { white-space: normal; letter-spacing: 0.05em; }
+        }
+        .brand-sub {
+            font-size: 10px;
+            margin-top: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.35em;
+            color: #c9a961;
+            font-weight: 600;
+        }
+        html.light .brand-sub { color: #8b6914; }
+
+        /* ===== CONTENEDOR PRINCIPAL ===== */
+        .stage {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 16px 40px;
+            position: relative;
+        }
+
+        /* ===== SECCIÓN DE MARCOS (PARED SUPERIOR) ===== */
+        .wall-section {
+            position: relative;
+            padding: 30px 8px 50px;
+            border-radius: 16px;
+        }
+
+        /* Moldura horizontal (chair rail / dado rail) donde termina la pared */
+        .wall-section::after {
+            content: '';
+            position: absolute;
+            left: -20px; right: -20px;
+            bottom: 0;
+            height: 18px;
+            background:
+                linear-gradient(180deg,
+                    rgba(0,0,0,0.5) 0%,
+                    #6b3a1c 15%,
+                    #8b5a2e 35%,
+                    #b07a45 50%,
+                    #6b3a1c 70%,
+                    #2a1408 90%,
+                    rgba(0,0,0,0.7) 100%);
+            box-shadow:
+                0 6px 15px rgba(0,0,0,0.7),
+                inset 0 1px 0 rgba(242,212,120,0.5),
+                inset 0 -1px 2px rgba(0,0,0,0.6);
+            border-radius: 2px;
+        }
+
+        .frames-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            padding-top: 10px;
+        }
+        @media (min-width: 768px) {
+            .frames-grid { grid-template-columns: repeat(3, 1fr); gap: 36px; padding-top: 20px; }
+        }
+
+        /* Marco de madera tallado — nogal con moldura ornamental */
+        .diploma-frame {
+            position: relative;
+            cursor: pointer;
+            padding: 22px;
+            border-radius: 3px;
+            background:
+                /* Vetas de nogal */
+                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='300'><defs><filter id='w'><feTurbulence type='fractalNoise' baseFrequency='2 0.04' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.08 0 0 0 0 0.03 0 0 0 0 0.01 0 0 0 0.5 0'/></filter></defs><rect width='200' height='300' filter='url(%23w)'/></svg>"),
+                /* Bevel exterior */
+                linear-gradient(135deg,
+                    #6b3a1c 0%,
+                    #4a250f 20%,
+                    #8b5a2e 45%,
+                    #b07a45 55%,
+                    #6b3a1c 75%,
+                    #2e1608 100%);
+            background-size: 200px 300px, auto;
+            box-shadow:
+                /* Sombra proyectada sobre la pared */
+                0 30px 50px -12px rgba(0,0,0,0.9),
+                0 15px 25px -8px rgba(0,0,0,0.6),
+                0 6px 10px rgba(0,0,0,0.5),
+                /* Bevel iluminación */
+                inset 0 2px 2px rgba(220,170,110,0.5),
+                inset 0 -3px 4px rgba(0,0,0,0.7),
+                inset 3px 0 3px rgba(0,0,0,0.35),
+                inset -3px 0 3px rgba(0,0,0,0.5);
+            transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s;
+        }
+        .diploma-frame:hover:not(.active) {
+            transform: translateY(-8px) rotateX(2deg);
+            box-shadow:
+                0 45px 65px -12px rgba(0,0,0,0.95),
+                0 22px 32px -8px rgba(0,0,0,0.75),
+                0 0 50px rgba(201,169,97,0.35),
+                inset 0 2px 2px rgba(220,170,110,0.6),
+                inset 0 -3px 4px rgba(0,0,0,0.7);
+        }
+
+        /* Filete dorado interior (molde ornamental) */
+        .diploma-frame::before {
+            content: '';
+            position: absolute;
+            inset: 16px;
+            border: 2px solid;
+            border-image: linear-gradient(135deg, #ffdb70 0%, #c9a961 30%, #8b6914 60%, #c9a961 100%) 1;
+            box-shadow:
+                inset 0 0 0 1px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(0,0,0,0.4),
+                inset 0 1px 2px rgba(255,220,150,0.4);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        /* Reflejo diagonal sobre la madera */
+        .diploma-frame::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 3px;
+            background: linear-gradient(135deg,
+                rgba(255,220,150,0.12) 0%,
+                transparent 30%,
+                transparent 70%,
+                rgba(0,0,0,0.15) 100%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .corner, .frame-crown, .frame-hanger { display: none; }
+
+        /* Passe-partout crema con textura */
+        .diploma-content {
+            background:
+                repeating-linear-gradient(0deg,
+                    rgba(139,105,20,0.05) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(139,105,20,0.03) 3px),
+                repeating-linear-gradient(90deg,
+                    rgba(139,105,20,0.05) 0px,
+                    transparent 1px,
+                    transparent 2px,
+                    rgba(139,105,20,0.03) 3px),
+                linear-gradient(180deg, #f5ecd7 0%, #eadfc5 50%, #dfd0ad 100%);
+            padding: 28px 26px;
+            border-radius: 1px;
+            min-height: 240px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow:
+                inset 0 0 30px rgba(139, 105, 20, 0.18),
+                inset 0 3px 6px rgba(0,0,0,0.2);
+        }
+
+        .diploma-content::before {
+            content: '';
+            position: absolute;
+            inset: 16px;
+            border: 1px solid rgba(139,105,20,0.6);
+            box-shadow:
+                0 0 0 4px #efe3c4,
+                0 0 0 5px rgba(139,105,20,0.55),
+                inset 0 6px 12px rgba(0,0,0,0.18),
+                inset 0 -3px 8px rgba(255,255,255,0.4);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .diploma-image-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            background: #fff;
+            overflow: hidden;
+            z-index: 3;
+            box-shadow:
+                inset 0 0 0 1px rgba(0,0,0,0.3),
+                0 0 0 1px rgba(139,105,20,0.4),
+                0 4px 10px rgba(0,0,0,0.35);
+        }
+        .diploma-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transition: transform 0.5s;
+        }
+        .diploma-frame:hover .diploma-image-wrap img {
+            transform: scale(1.03);
+        }
+        .diploma-image-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(115deg,
+                rgba(255,255,255,0.22) 0%,
+                rgba(255,255,255,0) 30%,
+                rgba(255,255,255,0) 70%,
+                rgba(255,255,255,0.1) 100%);
+            pointer-events: none;
+        }
+
+        .diploma-unit.active .diploma-content::before { inset: 12px; }
+        .diploma-unit.active .diploma-image-wrap {
+            aspect-ratio: auto;
+            max-height: 60vh;
+        }
+        .diploma-unit.active .diploma-image-wrap img {
+            object-fit: contain;
+            background: #fff;
+        }
+
+        /* ===== PLACA DE CUERO CON REMACHES ===== */
+        .leather-plaque {
+            display: none;
+            width: 85%;
+            max-width: 480px;
+            margin: 22px auto 0;
+            padding: 14px 20px;
+            position: relative;
+            background:
+                repeating-linear-gradient(92deg,
+                    rgba(0,0,0,0.2) 0px,
+                    transparent 1px,
+                    rgba(120,80,50,0.18) 3px,
+                    transparent 6px),
+                linear-gradient(180deg, #3a2418 0%, #5c3820 40%, #4a2c1a 100%);
+            border-radius: 4px;
+            box-shadow:
+                0 10px 22px rgba(0,0,0,0.65),
+                inset 0 1px 0 rgba(180,130,80,0.55),
+                inset 0 -1px 0 rgba(0,0,0,0.75);
+        }
+        .diploma-unit.active .leather-plaque {
+            display: block;
+            animation: plaqueIn 0.6s ease-out;
+        }
+        @keyframes plaqueIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .leather-patch {
+            position: relative;
+            padding: 16px 22px;
+            border-radius: 6px;
+            background:
+                radial-gradient(ellipse at 20% 30%, rgba(80,40,15,0.4) 0%, transparent 25%),
+                radial-gradient(ellipse at 70% 60%, rgba(60,30,10,0.35) 0%, transparent 30%),
+                radial-gradient(ellipse at 40% 80%, rgba(100,55,20,0.3) 0%, transparent 25%),
+                radial-gradient(ellipse at 85% 15%, rgba(50,25,8,0.4) 0%, transparent 20%),
+                radial-gradient(circle at 15% 25%, rgba(0,0,0,0.15) 0.5px, transparent 1px),
+                radial-gradient(circle at 60% 70%, rgba(0,0,0,0.12) 0.5px, transparent 1px),
+                radial-gradient(circle at 85% 40%, rgba(0,0,0,0.15) 0.5px, transparent 1px),
+                repeating-radial-gradient(circle at 30% 40%,
+                    rgba(0,0,0,0.06) 0px,
+                    transparent 2px,
+                    rgba(255,220,180,0.04) 3px),
+                linear-gradient(160deg, #8b4513 0%, #6b3410 30%, #a0552a 55%, #7a3f18 80%, #5c2f0f 100%);
+            background-size: auto, auto, auto, auto, 8px 8px, 12px 12px, 6px 6px, auto, auto;
+            box-shadow:
+                0 3px 6px rgba(0,0,0,0.6),
+                0 1px 2px rgba(0,0,0,0.5),
+                inset 0 2px 8px rgba(255,200,140,0.25),
+                inset 0 -2px 6px rgba(0,0,0,0.4);
+        }
+        .leather-patch::before {
+            content: '';
+            position: absolute;
+            inset: 6px;
+            border: 1.5px dashed rgba(255,220,150,0.7);
+            border-radius: 3px;
+            pointer-events: none;
+            filter: drop-shadow(0 1px 0 rgba(0,0,0,0.5));
+        }
+        .leather-patch::after {
+            content: '';
+            position: absolute;
+            inset: 5px;
+            border: 1px dashed rgba(0,0,0,0.4);
+            border-radius: 3px;
+            pointer-events: none;
+        }
+
+        .plaque-tag {
+            font-family: 'Cinzel', serif;
+            font-size: 9px;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: #f2d478;
+            text-shadow: 0 -1px 0 rgba(0,0,0,0.6), 0 1px 0 rgba(255,220,150,0.15);
+            margin-bottom: 4px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        .plaque-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: #ffe9b8;
+            text-shadow: 0 -1px 0 rgba(0,0,0,0.7), 0 1px 1px rgba(255,220,150,0.2), 0 0 12px rgba(242,212,120,0.3);
+            text-align: center;
+            letter-spacing: 0.03em;
+            position: relative;
+            z-index: 2;
+        }
+        @media (min-width: 768px) { .plaque-title { font-size: 22px; } }
+
+        .leather-patch .rivet {
+            position: absolute;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ffdb70 0%, #c9a961 45%, #6b4423 100%);
+            box-shadow:
+                inset -1px -1px 1px rgba(0,0,0,0.6),
+                inset 1px 1px 1px rgba(255,255,255,0.5),
+                0 1px 2px rgba(0,0,0,0.7);
+            z-index: 3;
+        }
+        .leather-patch .rivet.r-tl { top: 4px; left: 4px; }
+        .leather-patch .rivet.r-tr { top: 4px; right: 4px; }
+        .leather-patch .rivet.r-bl { bottom: 4px; left: 4px; }
+        .leather-patch .rivet.r-br { bottom: 4px; right: 4px; }
+
+        .diploma-zoom-icon {
+            position: absolute;
+            top: 26px; right: 26px;
+            color: #8b6914;
+            font-size: 14px;
+            background: rgba(245,236,215,0.92);
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            border: 1px solid rgba(139,105,20,0.4);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            z-index: 5;
+            transition: transform 0.3s;
+            opacity: 0;
+        }
+        .diploma-frame:hover .diploma-zoom-icon {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* ===== ESCRITORIO DE MADERA ELEGANTE ===== */
+        .desk-section {
+            margin-top: 60px;
+            position: relative;
+        }
+
+        /* Borde de moldura ornamental del canto */
+        .desk-edge {
+            height: 14px;
+            background:
+                linear-gradient(180deg,
+                    rgba(0,0,0,0.4) 0%,
+                    #b07a45 20%,
+                    #ffdb70 40%,
+                    #c9a961 55%,
+                    #8b5a2e 75%,
+                    #4a250f 100%);
+            border-radius: 4px 4px 0 0;
+            box-shadow:
+                inset 0 1px 0 rgba(255,220,150,0.6),
+                inset 0 -1px 0 rgba(0,0,0,0.6),
+                0 -2px 8px rgba(201,169,97,0.25);
+            position: relative;
+        }
+        .desk-edge::before {
+            content: '';
+            position: absolute;
+            top: 4px; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,220,150,0.7), transparent);
+        }
+
+        /* Superficie superior — madera pulida con vetas visibles */
+        .desk-top {
+            height: 44px;
+            background:
+                /* Vetas de nogal pulido */
+                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='60' viewBox='0 0 800 60'><defs><filter id='wood'><feTurbulence type='fractalNoise' baseFrequency='3 0.05' numOctaves='3' seed='11'/><feColorMatrix values='0 0 0 0 0.10 0 0 0 0 0.04 0 0 0 0 0.01 0 0 0 0.6 0'/></filter></defs><rect width='800' height='60' filter='url(%23wood)'/></svg>"),
+                /* Brillo superior (barniz) */
+                linear-gradient(180deg,
+                    rgba(255,220,150,0.15) 0%,
+                    transparent 20%,
+                    transparent 100%),
+                /* Base madera oscura */
+                linear-gradient(180deg, #6b3a1c 0%, #4a250f 30%, #2e1608 70%, #1a0d05 100%);
+            background-size: 800px 60px, auto, auto;
+            box-shadow:
+                inset 0 4px 10px rgba(0,0,0,0.7),
+                inset 0 -1px 0 rgba(255,220,150,0.15),
+                0 -3px 20px rgba(201,169,97,0.25),
+                0 15px 35px rgba(0,0,0,0.75);
+            position: relative;
+        }
+        /* Reflejo tenue del barniz */
+        .desk-top::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 50%;
+            background: linear-gradient(180deg,
+                rgba(255,220,150,0.18) 0%,
+                rgba(255,220,150,0.04) 50%,
+                transparent 100%);
+            pointer-events: none;
+        }
+
+        /* Frente del escritorio — panel con tallado clásico */
+        .desk-front {
+            position: relative;
+            background:
+                /* Vetas verticales sutiles */
+                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='400' viewBox='0 0 300 400'><defs><filter id='v'><feTurbulence type='fractalNoise' baseFrequency='0.03 2' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.06 0 0 0 0 0.02 0 0 0 0 0.01 0 0 0 0.4 0'/></filter></defs><rect width='300' height='400' filter='url(%23v)'/></svg>"),
+                /* Paneles tallados (marcos rectangulares) */
+                repeating-linear-gradient(90deg,
+                    transparent 0,
+                    transparent calc(33.33% - 3px),
+                    rgba(0,0,0,0.55) calc(33.33% - 3px),
+                    rgba(0,0,0,0.7) calc(33.33% - 1px),
+                    rgba(201,169,97,0.15) calc(33.33% - 0.5px),
+                    transparent calc(33.33% + 2px),
+                    transparent 33.33%),
+                linear-gradient(180deg, #2e1608 0%, #4a250f 40%, #3a1c0c 100%);
+            background-size: 300px 400px, auto, auto;
+            padding: 28px 16px 28px;
+            box-shadow:
+                inset 0 8px 20px rgba(0,0,0,0.75),
+                inset 0 -3px 8px rgba(0,0,0,0.6);
+            border-radius: 0 0 6px 6px;
+            min-height: 240px;
+            border-bottom: 4px solid #0a0503;
+        }
+        /* Molduras horizontales del panel */
+        .desk-front::before {
+            content: '';
+            position: absolute;
+            top: 14px; left: 8%; right: 8%;
+            height: 3px;
+            background: linear-gradient(180deg,
+                #b07a45 0%,
+                #ffdb70 45%,
+                #8b5a2e 55%,
+                rgba(0,0,0,0.5) 100%);
+            border-radius: 1px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.6), 0 0 10px rgba(201,169,97,0.3);
+        }
+        .desk-front::after {
+            content: '';
+            position: absolute;
+            bottom: 14px; left: 8%; right: 8%;
+            height: 3px;
+            background: linear-gradient(180deg,
+                #b07a45 0%,
+                #ffdb70 45%,
+                #8b5a2e 55%,
+                rgba(0,0,0,0.5) 100%);
+            border-radius: 1px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.6), 0 0 10px rgba(201,169,97,0.3);
+        }
+
+        /* Persona sentada */
+        .person-holder {
+            position: absolute;
+            left: 50%;
+            top: -170px;
+            transform: translateX(-50%);
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        @media (max-width: 767px) {
+            .person-holder { top: -120px; }
+        }
+        .person-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            box-shadow:
+                0 0 0 3px #c9a961,
+                0 0 0 6px #2a1810,
+                0 0 0 8px #f2d478,
+                0 0 40px rgba(242,212,120,0.4),
+                0 0 80px rgba(255,180,90,0.25),
+                0 25px 45px rgba(0,0,0,0.75);
+            transition: transform 0.4s;
+            background: #2a1810;
+        }
+        @media (max-width: 767px) {
+            .person-photo { width: 130px; height: 130px; }
+        }
+        .person-photo:hover { transform: scale(1.03); }
+        .person-photo img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            display: block;
+        }
+        .chair-back {
+            position: absolute;
+            top: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 240px;
+            height: 220px;
+            background: radial-gradient(ellipse at 50% 30%, #4a2c1a 0%, #2a1810 55%, transparent 75%);
+            filter: blur(2px);
+            z-index: -1;
+            border-radius: 50% 50% 20% 20%;
+        }
+
+        /* ===== OBJETOS SOBRE EL ESCRITORIO ===== */
+        .desk-items {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            padding-top: 20px;
+            position: relative;
+            z-index: 3;
+        }
+        @media (min-width: 768px) {
+            .desk-items {
+                grid-template-columns: 1fr 200px 1fr;
+                align-items: start;
+                padding-top: 10px;
+            }
+        }
+
+        /* Dispositivo apoyado sobre el escritorio con sombra proyectada */
+        .device {
+            background:
+                linear-gradient(145deg, #3a2418, #1a0d07);
+            padding: 12px;
+            border-radius: 14px;
+            position: relative;
+            box-shadow:
+                0 20px 35px rgba(0,0,0,0.75),
+                0 8px 15px rgba(0,0,0,0.55),
+                inset 0 1px 0 rgba(201,169,97,0.35),
+                inset 0 -1px 0 rgba(0,0,0,0.6),
+                0 0 25px rgba(34,211,238,0.12);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        /* Sombra proyectada sobre la madera */
+        .device::before {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 8%; right: 8%;
+            height: 20px;
+            background: radial-gradient(ellipse, rgba(0,0,0,0.5) 0%, transparent 70%);
+            filter: blur(6px);
+            z-index: -1;
+        }
+        .device.left { transform: rotate(-2deg); }
+        .device.right { transform: rotate(2deg); }
+        .device:hover {
+            transform: translateY(-4px) rotate(0deg);
+            box-shadow:
+                0 30px 45px rgba(0,0,0,0.85),
+                0 12px 20px rgba(0,0,0,0.65),
+                inset 0 1px 0 rgba(242,212,120,0.4),
+                0 0 45px rgba(34,211,238,0.35);
+        }
+
+        .device-screen {
+            background: linear-gradient(160deg, #0a1420 0%, #071018 50%, #0a1420 100%);
+            border-radius: 8px;
+            padding: 14px 14px;
+            color: #e6f0ff;
+            position: relative;
+            overflow: hidden;
+        }
+        .device-screen::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg,
+                transparent 0px,
+                transparent 2px,
+                rgba(34,211,238,0.03) 3px,
+                transparent 4px);
+            pointer-events: none;
+        }
+        .device-screen::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 40%;
+            background: radial-gradient(ellipse at top, rgba(34,211,238,0.15), transparent 70%);
+            pointer-events: none;
+        }
+
+        .device-header {
+            display: flex; align-items: center; gap: 6px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(34,211,238,0.25);
+            margin-bottom: 10px;
+            position: relative; z-index: 1;
+        }
+        .dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: #22d3ee;
+            box-shadow: 0 0 6px #22d3ee;
+        }
+        .dot.amber { background: #f2d478; box-shadow: 0 0 6px #f2d478; }
+        .dot.red { background: #ef4444; box-shadow: 0 0 6px #ef4444; }
+        .device-title {
+            margin-left: auto;
+            font-size: 10px;
+            color: rgba(34,211,238,0.85);
+            font-family: 'Inter', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            display: flex; align-items: center; gap: 4px;
+        }
+
+        .link-list { list-style: none; display: flex; flex-direction: column; gap: 4px; position: relative; z-index: 1; }
+        .device-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.25s;
+            border: 1px solid transparent;
+        }
+        .device-link:hover {
+            background: rgba(34,211,238,0.08);
+            border-color: rgba(34,211,238,0.3);
+            transform: translateX(3px);
+        }
+        .icon-box {
+            width: 34px; height: 34px;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 16px;
+            flex-shrink: 0;
+        }
+        .link-info { flex: 1; min-width: 0; }
+        .link-name { font-size: 13px; font-weight: 600; color: white; }
+        .link-url { font-size: 10px; color: rgba(34,211,238,0.6); font-family: monospace; }
+        .device-link i.ph-arrow-up-right { color: #22d3ee; font-size: 14px; }
+
+        .btn-linkedin {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #0a66c2 0%, #004182 100%);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 13px;
+            text-decoration: none;
+            border: 1px solid rgba(34,211,238,0.3);
+            box-shadow:
+                0 8px 20px rgba(10,102,194,0.4),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            transition: all 0.3s;
+        }
+        .btn-linkedin:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 12px 28px rgba(10,102,194,0.55),
+                0 0 25px rgba(34,211,238,0.4);
+        }
+        .nfc-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            margin-top: 10px;
+            font-size: 11px;
+            color: rgba(34,211,238,0.75);
+            text-decoration: none;
+            transition: color 0.25s;
+        }
+        .nfc-link:hover { color: #22d3ee; }
+
+        /* Zoom overlay */
+        .focus-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 5, 3, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            z-index: 90;
+        }
+        .focus-overlay.active { opacity: 1; pointer-events: auto; }
+        .focus-close {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: none;
+            border: none;
+            color: #f2d478;
+            font-size: 40px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .focus-close:hover { color: #fff; }
+
+        .diploma-unit { display: contents; }
+        .diploma-unit.active {
+            display: block;
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            width: 90vw;
+            max-width: 520px;
+            max-height: 92vh;
+            overflow-y: auto;
+        }
+        @media (min-width: 768px) {
+            .diploma-unit.active { max-width: 620px; }
+        }
+        .diploma-unit.active .diploma-content { min-height: 360px; }
+    </style>
+</head>
+<body>
+
+    <div class="wood-wall"></div>
+    <div class="ambient"></div>
+    <div class="vignette"></div>
+
+    <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+        <i id="theme-icon" class="ph ph-sun"></i>
+    </button>
+
+    <!-- PLACA DE BRONCE CON NOMBRE -->
+    <header class="brand-plaque">
+        <div class="brand-ornament">
+            <span class="line"></span>
+            <i class="ph ph-crown-simple"></i>
+            <span class="line"></span>
+        </div>
+        <h1 class="brand-title">DANIEL FIGUEROA CHACAMA</h1>
+        <p class="brand-sub">Ingeniero · Informática · Ciberseguridad</p>
+    </header>
+
+    <div class="stage">
+
+        <!-- PARED CON CUADROS -->
+        <section class="wall-section">
+            <div class="frames-grid">
+
+                <!-- Cuadro 1: Informática -->
+                <div class="diploma-unit" onclick="toggleZoom(this, event)">
+                    <div class="diploma-frame">
+                        <div class="diploma-content">
+                            <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
+                            <div class="diploma-image-wrap">
+                                <img src="images/DIPLOMA DE INGENIERIA EN INFORMATICA.png" alt="Diploma Ingeniería en Informática"
+                                     onerror="this.style.display='none'">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="leather-plaque">
+                        <div class="leather-patch">
+                            <span class="rivet r-tl"></span>
+                            <span class="rivet r-tr"></span>
+                            <span class="rivet r-bl"></span>
+                            <span class="rivet r-br"></span>
+                            <p class="plaque-tag">Título Profesional</p>
+                            <h2 class="plaque-title">Ingeniería en Informática</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cuadro 2: Ciberseguridad -->
+                <div class="diploma-unit" onclick="toggleZoom(this, event)">
+                    <div class="diploma-frame">
+                        <div class="diploma-content">
+                            <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
+                            <div class="diploma-image-wrap">
+                                <img src="images/DIPLOMA INGENIERO EN CIBERSEGURIDAD.png" alt="Diploma Ingeniero en Ciberseguridad"
+                                     onerror="this.style.display='none'">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="leather-plaque">
+                        <div class="leather-patch">
+                            <span class="rivet r-tl"></span>
+                            <span class="rivet r-tr"></span>
+                            <span class="rivet r-bl"></span>
+                            <span class="rivet r-br"></span>
+                            <p class="plaque-tag">Título Profesional · Universidad SEK</p>
+                            <h2 class="plaque-title">Ingeniería en Ciberseguridad</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cuadro 3: Diplomado Seguridad Privada -->
+                <div class="diploma-unit" onclick="toggleZoom(this, event)">
+                    <div class="diploma-frame">
+                        <div class="diploma-content">
+                            <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
+                            <div class="diploma-image-wrap">
+                                <img src="images/DIPLOMADO EN GESTION DE SEGURIDAD PRIVADA.png" alt="Diplomado en Gestión de Seguridad Privada"
+                                     onerror="this.style.display='none'">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="leather-plaque">
+                        <div class="leather-patch">
+                            <span class="rivet r-tl"></span>
+                            <span class="rivet r-tr"></span>
+                            <span class="rivet r-bl"></span>
+                            <span class="rivet r-br"></span>
+                            <p class="plaque-tag">Diplomado</p>
+                            <h2 class="plaque-title">Gestión de Seguridad Privada</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ESCRITORIO DE MADERA ELEGANTE -->
+        <section class="desk-section">
+            <div class="desk-edge"></div>
+            <div class="desk-top"></div>
+            <div class="desk-front">
+                <div class="person-holder">
+                    <div class="chair-back"></div>
+                    <div class="person-photo">
+                        <img src="images/daniel.webp" alt="Daniel Figueroa"
+                             onerror="this.onerror=null;this.src='https://placehold.co/400x400/2a1810/f2d478?text=DF'">
+                    </div>
+                </div>
+
+                <div class="desk-items">
+                    <div class="device left">
+                        <div class="device-screen">
+                            <div class="device-header">
+                                <span class="dot"></span>
+                                <span class="dot amber"></span>
+                                <span class="dot red"></span>
+                                <span class="device-title"><i class="ph ph-broadcast"></i> Portafolio</span>
+                            </div>
+                            <ul class="link-list">
+                                <li>
+                                    <a class="device-link" href="https://nfcnexo.cl" target="_blank" rel="noopener">
+                                        <span class="icon-box" style="background:linear-gradient(135deg,#0ea5e9,#0369a1);"><i class="ph ph-identification-card"></i></span>
+                                        <span class="link-info">
+                                            <span class="link-name">NFC Nexo</span><br>
+                                            <span class="link-url">nfcnexo.cl</span>
+                                        </span>
+                                        <i class="ph ph-arrow-up-right"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="device-link" href="https://os10coquimbo.cl" target="_blank" rel="noopener">
+                                        <span class="icon-box" style="background:linear-gradient(135deg,#10b981,#065f46);"><i class="ph ph-shield-check"></i></span>
+                                        <span class="link-info">
+                                            <span class="link-name">Portal OS10</span><br>
+                                            <span class="link-url">os10coquimbo.cl</span>
+                                        </span>
+                                        <i class="ph ph-arrow-up-right"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="device-link" href="https://capacitac.netlify.app" target="_blank" rel="noopener">
+                                        <span class="icon-box" style="background:linear-gradient(135deg,#a855f7,#6b21a8);"><i class="ph ph-graduation-cap"></i></span>
+                                        <span class="link-info">
+                                            <span class="link-name">Capacitac</span><br>
+                                            <span class="link-url">capacitac.netlify.app</span>
+                                        </span>
+                                        <i class="ph ph-arrow-up-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div></div>
+
+                    <div class="device right">
+                        <div class="device-screen">
+                            <div class="device-header">
+                                <span class="dot"></span>
+                                <span class="device-title"><i class="ph ph-address-book"></i> Contacto</span>
+                            </div>
+                            <div style="text-align:center;padding:6px 0;position:relative;z-index:1;">
+                                <p style="font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:rgba(34,211,238,0.75);margin-bottom:4px;">Red Profesional</p>
+                                <h4 style="font-family:'Playfair Display',serif;font-weight:700;font-size:18px;color:white;margin-bottom:14px;">Conectemos</h4>
+                                <a class="btn-linkedin" href="https://linkedin.com/in/tu-perfil" target="_blank" rel="noopener">
+                                    <i class="ph-fill ph-linkedin-logo" style="font-size:18px;"></i>
+                                    <span>Ver LinkedIn</span>
+                                </a>
+                                <a class="nfc-link" href="https://nfcnexo.cl/lectura.html?id=C3EB2F07&p=tarjeta" target="_blank" rel="noopener">
+                                    <i class="ph ph-scan"></i>
+                                    <span>Tarjeta NFC Nexo</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="focus-overlay" class="focus-overlay" onclick="closeZoom()">
+        <button class="focus-close" aria-label="Cerrar"><i class="ph ph-x-circle"></i></button>
+    </div>
+
+    <script>
+        const themeBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.documentElement;
+
+        function applyTheme() {
+            themeIcon.className = html.classList.contains('dark') ? 'ph ph-sun' : 'ph ph-moon';
+        }
+
+        if (localStorage.theme === 'light') {
+            html.classList.remove('dark');
+            html.classList.add('light');
+        }
+        applyTheme();
+
+        themeBtn.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                html.classList.add('light');
+                localStorage.theme = 'light';
+            } else {
+                html.classList.add('dark');
+                html.classList.remove('light');
+                localStorage.theme = 'dark';
+            }
+            applyTheme();
+        });
+
+        const overlay = document.getElementById('focus-overlay');
+        let activeFrame = null;
+
+        function toggleZoom(element, evt) {
+            if (evt) evt.stopPropagation();
+            if (activeFrame && activeFrame !== element) {
+                activeFrame.classList.remove('active');
+            }
+            if (element.classList.contains('active')) {
+                closeZoom();
+            } else {
+                element.classList.add('active');
+                overlay.classList.add('active');
+                activeFrame = element;
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeZoom() {
+            if (activeFrame) {
+                activeFrame.classList.remove('active');
+                activeFrame = null;
+            }
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeZoom();
+        });
+    </script>
+</body>
+</html>
