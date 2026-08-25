@@ -290,37 +290,36 @@
             border-radius: 3px;
             background:
                 /* Vetas de nogal */
-                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='300'><defs><filter id='w'><feTurbulence type='fractalNoise' baseFrequency='2 0.04' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.14 0 0 0 0 0.06 0 0 0 0 0.02 0 0 0 0.45 0'/></filter></defs><rect width='200' height='300' filter='url(%23w)'/></svg>"),
-                /* Bevel exterior iluminado */
+                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='300'><defs><filter id='w'><feTurbulence type='fractalNoise' baseFrequency='2 0.04' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.08 0 0 0 0 0.03 0 0 0 0 0.01 0 0 0 0.5 0'/></filter></defs><rect width='200' height='300' filter='url(%23w)'/></svg>"),
+                /* Bevel exterior */
                 linear-gradient(135deg,
-                    #8b5a2e 0%,
-                    #6b3a1c 20%,
-                    #b07a45 45%,
-                    #d99b60 55%,
-                    #8b5a2e 75%,
-                    #4a250f 100%);
+                    #6b3a1c 0%,
+                    #4a250f 20%,
+                    #8b5a2e 45%,
+                    #b07a45 55%,
+                    #6b3a1c 75%,
+                    #2e1608 100%);
             background-size: 200px 300px, auto;
             box-shadow:
                 /* Sombra proyectada sobre la pared */
-                0 30px 50px -12px rgba(0,0,0,0.7),
-                0 15px 25px -8px rgba(0,0,0,0.45),
-                0 6px 10px rgba(0,0,0,0.35),
-                /* Bevel iluminación fuerte */
-                inset 0 2px 2px rgba(255,220,160,0.7),
-                inset 0 -3px 4px rgba(0,0,0,0.55),
-                inset 3px 0 3px rgba(0,0,0,0.25),
-                inset -3px 0 3px rgba(0,0,0,0.35),
-                0 0 40px rgba(242,212,120,0.15);
+                0 30px 50px -12px rgba(0,0,0,0.9),
+                0 15px 25px -8px rgba(0,0,0,0.6),
+                0 6px 10px rgba(0,0,0,0.5),
+                /* Bevel iluminación */
+                inset 0 2px 2px rgba(220,170,110,0.5),
+                inset 0 -3px 4px rgba(0,0,0,0.7),
+                inset 3px 0 3px rgba(0,0,0,0.35),
+                inset -3px 0 3px rgba(0,0,0,0.5);
             transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s;
         }
         .diploma-frame:hover:not(.active) {
             transform: translateY(-8px) rotateX(2deg);
             box-shadow:
-                0 45px 65px -12px rgba(0,0,0,0.8),
-                0 22px 32px -8px rgba(0,0,0,0.55),
-                0 0 70px rgba(242,212,120,0.55),
-                inset 0 2px 2px rgba(255,230,170,0.8),
-                inset 0 -3px 4px rgba(0,0,0,0.55);
+                0 45px 65px -12px rgba(0,0,0,0.95),
+                0 22px 32px -8px rgba(0,0,0,0.75),
+                0 0 50px rgba(201,169,97,0.35),
+                inset 0 2px 2px rgba(220,170,110,0.6),
+                inset 0 -3px 4px rgba(0,0,0,0.7);
         }
 
         /* Filete dorado interior (molde ornamental) */
