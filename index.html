@@ -960,6 +960,22 @@
             .diploma-unit.active { max-width: 620px; }
         }
         .diploma-unit.active .diploma-content { min-height: 360px; }
+
+        /* En celular, al abrir un cuadro se conserva el MISMO porte del marco
+           (no se agranda); solo se centra sobre el fondo oscuro para enfocarlo */
+        @media (max-width: 767px) {
+            .diploma-unit.active {
+                width: calc(100vw - 48px);
+                max-width: none;
+            }
+            .diploma-unit.active .diploma-content { min-height: 240px; }
+            .diploma-unit.active .diploma-content::before { inset: 16px; }
+            .diploma-unit.active .diploma-image-wrap {
+                aspect-ratio: 4 / 3;
+                max-height: none;
+            }
+            .diploma-unit.active .diploma-image-wrap img { object-fit: cover; }
+        }
     </style>
 </head>
 <body>
