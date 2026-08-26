@@ -279,15 +279,36 @@
             padding-top: 10px;
         }
         @media (min-width: 768px) {
-            .frames-grid {
-                grid-template-columns: repeat(6, 1fr);
-                gap: 36px;
-                padding-top: 20px;
+            .frames-grid { grid-template-columns: repeat(3, 1fr); gap: 36px; padding-top: 20px; }
+        }
+
+        /* Segunda hilera del muro: marco horizontal + marco vertical, centrados */
+        .frames-row-secondary {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            margin-top: 40px;
+        }
+        @media (min-width: 768px) {
+            .frames-row-secondary {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: 60px;
+                margin-top: 56px;
             }
-            .frames-grid > .diploma-unit { grid-column: span 2; }
-            /* Última fila de 2 marcos centrados dentro de la grilla de 6 columnas */
-            .frames-grid > .diploma-unit:nth-child(4) { grid-column: 2 / span 2; }
-            .frames-grid > .diploma-unit:nth-child(5) { grid-column: 4 / span 2; }
+            .frames-row-secondary .diploma-unit {
+                flex: 0 0 auto;
+                width: 320px;
+            }
+            .frames-row-secondary .diploma-unit.vertical {
+                width: 260px;
+            }
+        }
+        /* Ratio real del diploma vertical (formato retrato A4) */
+        .diploma-unit.vertical .diploma-image-wrap {
+            aspect-ratio: 530 / 747;
         }
 
         /* Marco de madera tallado — nogal con moldura ornamental */
@@ -1066,8 +1087,11 @@
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Cuadro 4: Diplomado Ciberseguridad -->
+            <!-- Segunda hilera: Diplomado Ciberseguridad (horizontal) + Reconocimiento 20 años (vertical) -->
+            <div class="frames-row-secondary">
+                <!-- Cuadro 4: Diplomado Ciberseguridad (horizontal) -->
                 <div class="diploma-unit" onclick="toggleZoom(this, event)">
                     <div class="diploma-frame">
                         <div class="diploma-content">
@@ -1090,8 +1114,8 @@
                     </div>
                 </div>
 
-                <!-- Cuadro 5: Reconocimiento 20 años -->
-                <div class="diploma-unit" onclick="toggleZoom(this, event)">
+                <!-- Cuadro 5: Reconocimiento 20 años (vertical) -->
+                <div class="diploma-unit vertical" onclick="toggleZoom(this, event)">
                     <div class="diploma-frame">
                         <div class="diploma-content">
                             <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
