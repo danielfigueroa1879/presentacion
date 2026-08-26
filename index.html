@@ -4,9 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daniel Figueroa | Oficina Virtual</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Playfair+Display:wght@600;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+    <!-- Adelanta la conexión a los CDNs para acelerar en celular -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com" crossorigin>
+
+    <!-- Fuentes sin bloquear el primer render (swap + carga diferida) -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap"
+          media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css"
+          media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css"
+          media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap">
+        <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+        <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+    </noscript>
 
     <style>
         :root {
@@ -1110,6 +1125,34 @@
             }
             .diploma-unit.active .diploma-image-wrap img { object-fit: cover; }
         }
+
+        /* ===== OPTIMIZACIÓN PARA CELULAR (fluidez y rapidez) ===== */
+        @media (max-width: 767px) {
+            /* El blur en tiempo real es lo que más traba en celular: se
+               reemplaza por fondos sólidos, manteniendo el mismo look oscuro */
+            .frame-backdrop {
+                background: rgba(10, 5, 3, 0.94);
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
+            .focus-overlay {
+                background: rgba(10, 5, 3, 0.97);
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+            }
+            .diploma-unit.active .diploma-zoom-icon {
+                backdrop-filter: none;
+                -webkit-backdrop-filter: none;
+                background: rgba(20, 12, 5, 0.55);
+            }
+            /* Aligera los halos decorativos difuminados (composición costosa) */
+            .ambient { filter: blur(18px); }
+            .ambient-side { display: none; }
+            /* Evita pintar/medir lo que está fuera de pantalla hasta que se acerca */
+            .desk-section { content-visibility: auto; contain-intrinsic-size: 1px 640px; }
+            /* Anima solo la transformación, sin recalcular sombras en el hover */
+            .diploma-frame:hover:not(.active) { transform: none; }
+        }
     </style>
 </head>
 <body>
@@ -1147,7 +1190,7 @@
                             <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
                             <div class="diploma-image-wrap">
                                 <img src="images/DIPLOMA DE INGENIERIA EN INFORMATICA.webp" alt="Diploma Ingeniería en Informática"
-                                     width="3308" height="2339" decoding="async"
+                                     width="3308" height="2339" decoding="async" fetchpriority="high"
                                      onerror="this.style.display='none'">
                             </div>
                         </div>
@@ -1171,7 +1214,7 @@
                             <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
                             <div class="diploma-image-wrap">
                                 <img src="images/DIPLOMA INGENIERO EN CIBERSEGURIDAD.webp" alt="Diploma Ingeniero en Ciberseguridad"
-                                     width="1320" height="930" decoding="async"
+                                     width="1320" height="930" decoding="async" loading="lazy"
                                      onerror="this.style.display='none'">
                             </div>
                         </div>
@@ -1195,7 +1238,7 @@
                             <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
                             <div class="diploma-image-wrap">
                                 <img src="images/DIPLOMADO EN GESTION DE SEGURIDAD PRIVADA.webp" alt="Diplomado en Gestión de Seguridad Privada"
-                                     width="2006" height="1365" decoding="async"
+                                     width="2006" height="1365" decoding="async" loading="lazy"
                                      onerror="this.style.display='none'">
                             </div>
                         </div>
@@ -1223,6 +1266,7 @@
                     <div class="chair-back"></div>
                     <div class="person-photo">
                         <img src="images/daniel.webp" alt="Daniel Figueroa"
+                             width="400" height="400" decoding="async" loading="lazy"
                              onerror="this.onerror=null;this.src='https://placehold.co/400x400/2a1810/f2d478?text=DF'">
                     </div>
                 </div>
