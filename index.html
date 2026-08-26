@@ -930,7 +930,7 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 0.35s;
-            z-index: 90;
+            z-index: 200;   /* por encima del marco enfocado */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1037,6 +1037,21 @@
             transition: opacity 0.4s;
         }
 
+        /* Fondo oscuro al acercar un cuadro al frente (paso 1: marco + diploma) */
+        .frame-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 5, 3, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            z-index: 95;
+        }
+        .frame-backdrop.active { opacity: 1; pointer-events: auto; }
+        html.frame-open .theme-toggle { opacity: 0; pointer-events: none; }
+
         .diploma-unit { display: contents; }
         .diploma-unit.active {
             display: block;
@@ -1048,6 +1063,26 @@
             max-width: 520px;
             max-height: 92vh;
             overflow-y: auto;
+            cursor: zoom-in;
+            animation: frameIn 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        /* Entrada ágil del marco: escala hacia el frente conservando el centrado */
+        @keyframes frameIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.82); }
+            to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+        /* Lupa destacada al frente: invita a acercar el diploma en sí (paso 2) */
+        .diploma-unit.active .diploma-zoom-icon {
+            opacity: 1;
+            top: 18px; right: 18px;
+            width: 46px; height: 46px;
+            font-size: 21px;
+            background: #fff;
+            animation: lupaPulse 1.8s ease-in-out infinite;
+        }
+        @keyframes lupaPulse {
+            0%, 100% { transform: scale(1);    box-shadow: 0 2px 6px rgba(0,0,0,0.35); }
+            50%      { transform: scale(1.12); box-shadow: 0 0 0 7px rgba(242,212,120,0.18), 0 3px 12px rgba(0,0,0,0.45); }
         }
         @media (min-width: 768px) {
             .diploma-unit.active { max-width: 620px; }
@@ -1100,7 +1135,7 @@
             <div class="frames-grid">
 
                 <!-- Cuadro 1: Informática -->
-                <div class="diploma-unit" onclick="openViewer(this, event)">
+                <div class="diploma-unit" onclick="handleUnitClick(this, event)">
                     <div class="diploma-frame">
                         <div class="diploma-content">
                             <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
@@ -1124,7 +1159,7 @@
                 </div>
 
                 <!-- Cuadro 2: Ciberseguridad -->
-                <div class="diploma-unit" onclick="openViewer(this, event)">
+                <div class="diploma-unit" onclick="handleUnitClick(this, event)">
                     <div class="diploma-frame">
                         <div class="diploma-content">
                             <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
@@ -1148,7 +1183,7 @@
                 </div>
 
                 <!-- Cuadro 3: Diplomado Seguridad Privada -->
-                <div class="diploma-unit" onclick="openViewer(this, event)">
+                <div class="diploma-unit" onclick="handleUnitClick(this, event)">
                     <div class="diploma-frame">
                         <div class="diploma-content">
                             <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
@@ -1257,6 +1292,9 @@
         </section>
     </div>
 
+    <!-- Fondo oscuro cuando un cuadro se acerca al frente (paso 1) -->
+    <div id="frame-backdrop" class="frame-backdrop" onclick="unfocusFrame()"></div>
+
     <div id="focus-overlay" class="focus-overlay">
         <div class="viewer-stage" id="viewer-stage">
             <img id="viewer-img" class="viewer-img" src="" alt="" draggable="false">
@@ -1322,7 +1360,35 @@
             applyTransform();
         }
 
-        // Abre el visor con la imagen del diploma seleccionado
+        const frameBackdrop = document.getElementById('frame-backdrop');
+        let focusedUnit = null;
+
+        /* PASO 1: acerca el cuadro (marco + diploma) al frente, ágil y fluido.
+           PASO 2: si ya está al frente, un nuevo toque (o la lupa) abre el zoom. */
+        function handleUnitClick(unit, evt) {
+            if (unit.classList.contains('active')) openViewer(unit, evt);
+            else focusFrame(unit, evt);
+        }
+
+        function focusFrame(unit, evt) {
+            if (evt) evt.stopPropagation();
+            if (focusedUnit && focusedUnit !== unit) focusedUnit.classList.remove('active');
+            focusedUnit = unit;
+            unit.classList.add('active');
+            frameBackdrop.classList.add('active');
+            html.classList.add('frame-open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function unfocusFrame() {
+            if (focusedUnit) focusedUnit.classList.remove('active');
+            focusedUnit = null;
+            frameBackdrop.classList.remove('active');
+            html.classList.remove('frame-open');
+            if (!overlay.classList.contains('active')) document.body.style.overflow = '';
+        }
+
+        // Abre el visor con la imagen del diploma seleccionado (zoom del diploma en sí)
         function openViewer(unit, evt) {
             if (evt) evt.stopPropagation();
             const img = unit.querySelector('.diploma-image-wrap img');
@@ -1340,7 +1406,8 @@
         function closeViewer() {
             overlay.classList.remove('active');
             html.classList.remove('viewer-open');
-            document.body.style.overflow = '';
+            // Al cerrar el zoom se regresa al cuadro enfocado (si sigue al frente)
+            if (!focusedUnit) document.body.style.overflow = '';
             setTimeout(() => { if (!overlay.classList.contains('active')) vImg.src = ''; }, 350);
         }
 
@@ -1435,10 +1502,13 @@
         });
 
         document.addEventListener('keydown', (e) => {
-            if (!overlay.classList.contains('active')) return;
-            if (e.key === 'Escape') closeViewer();
-            else if (e.key === '+' || e.key === '=') viewerStep(1.4);
-            else if (e.key === '-' || e.key === '_') viewerStep(0.7);
+            if (overlay.classList.contains('active')) {
+                if (e.key === 'Escape') closeViewer();
+                else if (e.key === '+' || e.key === '=') viewerStep(1.4);
+                else if (e.key === '-' || e.key === '_') viewerStep(0.7);
+            } else if (focusedUnit && e.key === 'Escape') {
+                unfocusFrame();
+            }
         });
     </script>
 </body>
