@@ -749,12 +749,8 @@
         .person-photo img {
             width: 100%; height: 100%;
             object-fit: cover;
-            object-position: center 20%;
+            object-position: center center;
             display: block;
-        }
-        /* En celular se muestra la foto completa, sin recortar los bordes */
-        @media (max-width: 767px) {
-            .person-photo img { object-fit: contain; object-position: center; }
         }
         .chair-back {
             position: absolute;
@@ -1281,7 +1277,7 @@
                     <div class="chair-back"></div>
                     <div class="person-photo">
                         <img src="images/daniel.webp" alt="Daniel Figueroa"
-                             width="400" height="400" decoding="async" loading="lazy"
+                             width="512" height="512" decoding="async" loading="lazy"
                              onerror="this.onerror=null;this.src='https://placehold.co/400x400/2a1810/f2d478?text=DF'">
                     </div>
                 </div>
