@@ -557,20 +557,21 @@
             position: absolute;
             top: 26px; right: 26px;
             color: #8b6914;
-            font-size: 14px;
-            background: rgba(245,236,215,0.92);
-            width: 26px; height: 26px;
+            font-size: 15px;
+            background: rgba(245,236,215,0.95);
+            width: 30px; height: 30px;
             border-radius: 50%;
             display: flex; align-items: center; justify-content: center;
-            border: 1px solid rgba(139,105,20,0.4);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            border: 1px solid rgba(139,105,20,0.5);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.35);
             z-index: 5;
-            transition: transform 0.3s;
-            opacity: 0;
+            transition: transform 0.3s, opacity 0.3s, background 0.3s;
+            opacity: 0.9;                 /* siempre visible como pista de "ampliar" */
         }
         .diploma-frame:hover .diploma-zoom-icon {
             opacity: 1;
-            transform: scale(1.1);
+            transform: scale(1.12);
+            background: #fff;
         }
 
         /* ===== ESCRITORIO DE MADERA ELEGANTE ===== */
@@ -919,30 +920,122 @@
         }
         .nfc-link:hover { color: #22d3ee; }
 
-        /* Zoom overlay */
+        /* ===== VISOR DE DIPLOMA (lupa / zoom) ===== */
         .focus-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(10, 5, 3, 0.92);
+            background: rgba(10, 5, 3, 0.94);
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s;
+            transition: opacity 0.35s;
             z-index: 90;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .focus-overlay.active { opacity: 1; pointer-events: auto; }
-        .focus-close {
+
+        /* Oculta el botón de tema mientras el visor está abierto (evita choque con Cerrar) */
+        html.viewer-open .theme-toggle { opacity: 0; pointer-events: none; }
+
+        .viewer-stage {
             position: absolute;
-            top: 20px; right: 20px;
-            background: none;
-            border: none;
-            color: #f2d478;
-            font-size: 40px;
-            cursor: pointer;
-            transition: color 0.2s;
+            inset: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            touch-action: none;   /* gestionamos pan/zoom nosotros */
         }
-        .focus-close:hover { color: #fff; }
+        .viewer-img {
+            max-width: 92vw;
+            max-height: 84vh;
+            object-fit: contain;
+            border-radius: 2px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 0 1px rgba(242,212,120,0.25);
+            transform: translate(0px, 0px) scale(1);
+            transform-origin: center center;
+            transition: transform 0.18s ease-out;
+            cursor: zoom-in;
+            will-change: transform;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+        .viewer-img.zoomed { cursor: grab; transition: none; }
+        .viewer-img.grabbing { cursor: grabbing; transition: none; }
+
+        .focus-close {
+            position: fixed;
+            top: 16px; right: 18px;
+            z-index: 95;
+            width: 46px; height: 46px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(30,16,8,0.7);
+            border: 1px solid rgba(242,212,120,0.4);
+            border-radius: 50%;
+            color: #f2d478;
+            font-size: 26px;
+            cursor: pointer;
+            transition: color 0.2s, background 0.2s, transform 0.2s;
+        }
+        .focus-close:hover { color: #fff; background: rgba(60,30,15,0.9); transform: scale(1.06); }
+
+        .viewer-caption {
+            position: fixed;
+            top: 18px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 95;
+            max-width: 70vw;
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-size: 14px;
+            letter-spacing: 0.06em;
+            color: #f5ecd7;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.8);
+            pointer-events: none;
+        }
+
+        .viewer-controls {
+            position: fixed;
+            bottom: 22px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 95;
+            display: flex;
+            gap: 10px;
+            padding: 8px 10px;
+            background: rgba(30,16,8,0.72);
+            border: 1px solid rgba(242,212,120,0.35);
+            border-radius: 40px;
+            box-shadow: 0 8px 22px rgba(0,0,0,0.6);
+        }
+        .viewer-controls button {
+            width: 42px; height: 42px;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(145deg, #3a1f10, #1a0a04);
+            border: 1px solid rgba(201,169,97,0.5);
+            border-radius: 50%;
+            color: #f2d478;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .viewer-controls button:hover { transform: scale(1.08); background: linear-gradient(145deg, #4a2810, #241109); }
+        .viewer-controls button:active { transform: scale(0.94); }
+
+        .viewer-hint {
+            position: fixed;
+            bottom: 76px; left: 50%;
+            transform: translateX(-50%);
+            z-index: 95;
+            font-size: 11px;
+            letter-spacing: 0.04em;
+            color: rgba(245,236,215,0.7);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
 
         .diploma-unit { display: contents; }
         .diploma-unit.active {
@@ -1007,7 +1100,7 @@
             <div class="frames-grid">
 
                 <!-- Cuadro 1: Informática -->
-                <div class="diploma-unit" onclick="toggleZoom(this, event)">
+                <div class="diploma-unit" onclick="openViewer(this, event)">
                     <div class="diploma-frame">
                         <div class="diploma-content">
                             <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
@@ -1031,7 +1124,7 @@
                 </div>
 
                 <!-- Cuadro 2: Ciberseguridad -->
-                <div class="diploma-unit" onclick="toggleZoom(this, event)">
+                <div class="diploma-unit" onclick="openViewer(this, event)">
                     <div class="diploma-frame">
                         <div class="diploma-content">
                             <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
@@ -1055,7 +1148,7 @@
                 </div>
 
                 <!-- Cuadro 3: Diplomado Seguridad Privada -->
-                <div class="diploma-unit" onclick="toggleZoom(this, event)">
+                <div class="diploma-unit" onclick="openViewer(this, event)">
                     <div class="diploma-frame">
                         <div class="diploma-content">
                             <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
@@ -1164,8 +1257,18 @@
         </section>
     </div>
 
-    <div id="focus-overlay" class="focus-overlay" onclick="closeZoom()">
-        <button class="focus-close" aria-label="Cerrar"><i class="ph ph-x-circle"></i></button>
+    <div id="focus-overlay" class="focus-overlay">
+        <div class="viewer-stage" id="viewer-stage">
+            <img id="viewer-img" class="viewer-img" src="" alt="" draggable="false">
+        </div>
+        <p class="viewer-caption" id="viewer-caption"></p>
+        <button class="focus-close" aria-label="Cerrar" onclick="closeViewer()"><i class="ph ph-x"></i></button>
+        <div class="viewer-hint" id="viewer-hint">Toca la imagen o usa + / − para acercar</div>
+        <div class="viewer-controls">
+            <button aria-label="Alejar" onclick="viewerStep(0.7)"><i class="ph ph-minus"></i></button>
+            <button aria-label="Ajustar" onclick="viewerReset()"><i class="ph ph-arrows-in"></i></button>
+            <button aria-label="Acercar" onclick="viewerStep(1.4)"><i class="ph ph-plus"></i></button>
+        </div>
     </div>
 
     <script>
@@ -1196,35 +1299,146 @@
             applyTheme();
         });
 
-        const overlay = document.getElementById('focus-overlay');
-        let activeFrame = null;
+        /* ===== VISOR DE DIPLOMA CON ZOOM (lupa) ===== */
+        const overlay   = document.getElementById('focus-overlay');
+        const vStage    = document.getElementById('viewer-stage');
+        const vImg      = document.getElementById('viewer-img');
+        const vCaption  = document.getElementById('viewer-caption');
+        const vHint     = document.getElementById('viewer-hint');
 
-        function toggleZoom(element, evt) {
+        const MIN_SCALE = 1, MAX_SCALE = 5;
+        let scale = 1, tx = 0, ty = 0;
+
+        function applyTransform() {
+            vImg.style.transform = `translate(${tx}px, ${ty}px) scale(${scale})`;
+            const zoomed = scale > 1.001;
+            vImg.classList.toggle('zoomed', zoomed);
+            if (vHint) vHint.style.opacity = zoomed ? '0' : '1';
+        }
+
+        function resetView() {
+            scale = 1; tx = 0; ty = 0;
+            vImg.style.transition = 'transform 0.18s ease-out';
+            applyTransform();
+        }
+
+        // Abre el visor con la imagen del diploma seleccionado
+        function openViewer(unit, evt) {
             if (evt) evt.stopPropagation();
-            if (activeFrame && activeFrame !== element) {
-                activeFrame.classList.remove('active');
-            }
-            if (element.classList.contains('active')) {
-                closeZoom();
-            } else {
-                element.classList.add('active');
-                overlay.classList.add('active');
-                activeFrame = element;
-                document.body.style.overflow = 'hidden';
-            }
+            const img = unit.querySelector('.diploma-image-wrap img');
+            const title = unit.querySelector('.plaque-title');
+            if (!img) return;
+            vImg.src = img.currentSrc || img.src;
+            vImg.alt = img.alt || '';
+            vCaption.textContent = title ? title.textContent : (img.alt || '');
+            resetView();
+            overlay.classList.add('active');
+            html.classList.add('viewer-open');
+            document.body.style.overflow = 'hidden';
         }
 
-        function closeZoom() {
-            if (activeFrame) {
-                activeFrame.classList.remove('active');
-                activeFrame = null;
-            }
+        function closeViewer() {
             overlay.classList.remove('active');
+            html.classList.remove('viewer-open');
             document.body.style.overflow = '';
+            setTimeout(() => { if (!overlay.classList.contains('active')) vImg.src = ''; }, 350);
         }
+
+        // Zoom manteniendo fijo el punto (cx, cy) en coordenadas de pantalla
+        function zoomAt(newScale, cx, cy) {
+            newScale = Math.min(MAX_SCALE, Math.max(MIN_SCALE, newScale));
+            const rect = vImg.getBoundingClientRect();
+            const px = cx - (rect.left + rect.width / 2);
+            const py = cy - (rect.top + rect.height / 2);
+            const k = newScale / scale;
+            tx -= px * (k - 1);
+            ty -= py * (k - 1);
+            scale = newScale;
+            if (scale <= MIN_SCALE + 0.001) { scale = 1; tx = 0; ty = 0; }
+            vImg.style.transition = 'transform 0.18s ease-out';
+            applyTransform();
+        }
+
+        // Botones +/− (zoom hacia el centro de la pantalla)
+        function viewerStep(factor) {
+            zoomAt(scale * factor, window.innerWidth / 2, window.innerHeight / 2);
+        }
+        function viewerReset() { resetView(); }
+
+        // Toque/click sobre la imagen: alterna entre ajustar y acercar (2.5x)
+        let downX = 0, downY = 0, moved = false, panning = false;
+        const pointers = new Map();
+        let pinchStartDist = 0, pinchStartScale = 1;
+
+        vImg.addEventListener('pointerdown', (e) => {
+            vImg.setPointerCapture(e.pointerId);
+            pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+            downX = e.clientX; downY = e.clientY; moved = false;
+            if (pointers.size === 2) {
+                const pts = [...pointers.values()];
+                pinchStartDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+                pinchStartScale = scale;
+            } else if (scale > 1) {
+                panning = true;
+                vImg.classList.add('grabbing');
+            }
+        });
+
+        vImg.addEventListener('pointermove', (e) => {
+            if (!pointers.has(e.pointerId)) return;
+            const prev = pointers.get(e.pointerId);
+            const dx = e.clientX - prev.x, dy = e.clientY - prev.y;
+            pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+            if (pointers.size === 2 && pinchStartDist > 0) {
+                const pts = [...pointers.values()];
+                const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+                const midX = (pts[0].x + pts[1].x) / 2, midY = (pts[0].y + pts[1].y) / 2;
+                vImg.style.transition = 'none';
+                zoomAt(pinchStartScale * (dist / pinchStartDist), midX, midY);
+                moved = true;
+                return;
+            }
+            if (panning && scale > 1) {
+                tx += dx; ty += dy; moved = true;
+                vImg.style.transition = 'none';
+                applyTransform();
+            }
+            if (Math.abs(e.clientX - downX) > 6 || Math.abs(e.clientY - downY) > 6) moved = true;
+        });
+
+        function endPointer(e) {
+            if (pointers.has(e.pointerId)) pointers.delete(e.pointerId);
+            if (pointers.size < 2) pinchStartDist = 0;
+            if (pointers.size === 0) {
+                panning = false;
+                vImg.classList.remove('grabbing');
+                if (!moved) {
+                    // toque simple = alternar zoom en el punto tocado
+                    if (scale > 1) resetView();
+                    else zoomAt(2.5, e.clientX, e.clientY);
+                }
+            }
+        }
+        vImg.addEventListener('pointerup', endPointer);
+        vImg.addEventListener('pointercancel', endPointer);
+
+        // Rueda del mouse = zoom (desktop)
+        vStage.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            zoomAt(scale * (e.deltaY < 0 ? 1.18 : 1 / 1.18), e.clientX, e.clientY);
+        }, { passive: false });
+
+        // Cerrar al tocar el fondo (fuera de la imagen)
+        vStage.addEventListener('pointerdown', (e) => {
+            if (e.target === vStage) closeViewer();
+        });
 
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeZoom();
+            if (!overlay.classList.contains('active')) return;
+            if (e.key === 'Escape') closeViewer();
+            else if (e.key === '+' || e.key === '=') viewerStep(1.4);
+            else if (e.key === '-' || e.key === '_') viewerStep(0.7);
         });
     </script>
 </body>
