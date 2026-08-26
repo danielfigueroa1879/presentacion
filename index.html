@@ -290,6 +290,35 @@
             .frames-grid > .diploma-unit:nth-child(5) { grid-column: 4 / span 2; }
         }
 
+        /* Segunda hilera del muro: marco horizontal + marco vertical, centrados */
+        .frames-row-secondary {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 32px;
+            margin-top: 40px;
+        }
+        @media (min-width: 768px) {
+            .frames-row-secondary {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                gap: 60px;
+                margin-top: 56px;
+            }
+            .frames-row-secondary .diploma-unit {
+                flex: 0 0 auto;
+                width: 320px;
+            }
+            .frames-row-secondary .diploma-unit.vertical {
+                width: 260px;
+            }
+        }
+        /* Ratio real del diploma vertical (formato retrato A4) */
+        .diploma-unit.vertical .diploma-image-wrap {
+            aspect-ratio: 530 / 747;
+        }
+
         /* Marco de madera tallado — nogal con moldura ornamental */
         .diploma-frame {
             position: relative;
@@ -1092,6 +1121,55 @@
 
                 <!-- Cuadro 5: Reconocimiento 20 años -->
                 <div class="diploma-unit" onclick="toggleZoom(this, event)">
+                    <div class="diploma-frame">
+                        <div class="diploma-content">
+                            <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
+                            <div class="diploma-image-wrap">
+                                <img src="images/20años.png" alt="Reconocimiento 20 años de trayectoria"
+                                     onerror="this.style.display='none'">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="leather-plaque">
+                        <div class="leather-patch">
+                            <span class="rivet r-tl"></span>
+                            <span class="rivet r-tr"></span>
+                            <span class="rivet r-bl"></span>
+                            <span class="rivet r-br"></span>
+                            <p class="plaque-tag">Reconocimiento</p>
+                            <h2 class="plaque-title">20 Años de Trayectoria</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Segunda hilera: Diplomado Ciberseguridad (horizontal) + Reconocimiento 20 años (vertical) -->
+            <div class="frames-row-secondary">
+                <!-- Cuadro 4: Diplomado Ciberseguridad (horizontal) -->
+                <div class="diploma-unit" onclick="toggleZoom(this, event)">
+                    <div class="diploma-frame">
+                        <div class="diploma-content">
+                            <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
+                            <div class="diploma-image-wrap">
+                                <img src="images/DiplomadoCibserguridad.png" alt="Diplomado en Ciberseguridad"
+                                     onerror="this.style.display='none'">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="leather-plaque">
+                        <div class="leather-patch">
+                            <span class="rivet r-tl"></span>
+                            <span class="rivet r-tr"></span>
+                            <span class="rivet r-bl"></span>
+                            <span class="rivet r-br"></span>
+                            <p class="plaque-tag">Diplomado</p>
+                            <h2 class="plaque-title">Ciberseguridad</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cuadro 5: Reconocimiento 20 años (vertical) -->
+                <div class="diploma-unit vertical" onclick="toggleZoom(this, event)">
                     <div class="diploma-frame">
                         <div class="diploma-content">
                             <i class="ph ph-magnifying-glass-plus diploma-zoom-icon"></i>
