@@ -753,7 +753,7 @@
         .person-photo img {
             width: 100%; height: 100%;
             object-fit: cover;
-            object-position: center center;
+            object-position: center top;
             display: block;
         }
         .chair-back {
@@ -1154,8 +1154,6 @@
             /* Aligera los halos decorativos difuminados (composición costosa) */
             .ambient { filter: blur(18px); }
             .ambient-side { display: none; }
-            /* Evita pintar/medir lo que está fuera de pantalla hasta que se acerca */
-            .desk-section { content-visibility: auto; contain-intrinsic-size: 1px 640px; }
             /* Anima solo la transformación, sin recalcular sombras en el hover */
             .diploma-frame:hover:not(.active) { transform: none; }
             /* Brillos gigantes de la foto reducidos (pintar blur enorme traba) */
@@ -1280,7 +1278,7 @@
                 <div class="person-holder">
                     <div class="chair-back"></div>
                     <div class="person-photo">
-                        <img src="images/daniel.webp?v=3" alt="Daniel Figueroa"
+                        <img src="images/daniel.webp?v=4" alt="Daniel Figueroa"
                              width="512" height="512" decoding="async" loading="lazy"
                              onerror="this.onerror=null;this.src='https://placehold.co/400x400/2a1810/f2d478?text=DF'">
                     </div>
