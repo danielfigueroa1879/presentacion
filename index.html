@@ -1253,13 +1253,16 @@
                 inset 0 3px 8px rgba(0,0,0,0.18);
         }
         html.scene-on .diploma-unit .diploma-image-wrap {
-            aspect-ratio: 1.38 / 1;   /* caja apaisada uniforme; el diploma llena arriba y abajo */
+            aspect-ratio: auto;      /* cada marco toma la forma natural de su diploma */
+            width: 100%;
             height: auto;
             background: linear-gradient(180deg, #f7efdc 0%, #eadfc5 55%, #ded0ac 100%);
         }
         html.scene-on .diploma-unit .diploma-image-wrap img {
-            height: 100%;
+            width: 100%;
+            height: auto;            /* diploma completo, sin recortes ni crema sobrante */
             object-fit: contain;
+            display: block;
             filter: drop-shadow(0 0.1vw 0.28vw rgba(0,0,0,0.4));
         }
         html.scene-on .diploma-unit .diploma-zoom-icon {
