@@ -1132,8 +1132,26 @@
             .diploma-unit.active .diploma-image-wrap img { object-fit: cover; }
         }
 
+        /* ===== RENDIMIENTO (PC y celular) =====
+           No se pinta lo que está bajo el pliegue (enlaces y galería) hasta
+           que el usuario se acerca: acelera el primer render en ambos. */
+        .desk-section, .title-index {
+            content-visibility: auto;
+            contain-intrinsic-size: auto 600px;
+        }
+        /* El cuadro enfocado se compone en la GPU para abrir sin trabas */
+        .diploma-unit.active, .viewer-stage { will-change: transform; }
+
         /* ===== OPTIMIZACIÓN PARA CELULAR (fluidez y rapidez) ===== */
         @media (max-width: 767px) {
+            /* La foto del despacho ya tapa la pared: se evita pintar la textura
+               de vetas SVG (costosa) y se deja un degradado sólido debajo. */
+            html.scene-on .wood-wall {
+                background-image: none;
+                background: linear-gradient(180deg, #5a3016 0%, #3a1c0c 100%);
+            }
+            /* Apertura del diploma más ágil en celular */
+            html.scene-on .diploma-unit.active { animation-duration: 0.28s; }
             /* El blur en tiempo real es lo que más traba en celular: se
                reemplaza por fondos sólidos, manteniendo el mismo look oscuro */
             .frame-backdrop {
