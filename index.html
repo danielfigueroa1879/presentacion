@@ -441,8 +441,8 @@
                 top: 0;
                 left: calc(50% - 50vw);
                 width: 100vw;
-                /* La foto mide 2000x1076 → alto = ancho / 1.859 */
-                height: calc(100vw / 1.859);
+                /* La foto mide 2816x1536 → alto = ancho / 1.8333 */
+                height: calc(100vw / 1.8333);
                 gap: 0;
                 pointer-events: none;
             }
@@ -457,11 +457,11 @@
             /* Vano interior de cada marco de la foto (porcentajes del muro).
                El diploma se monta DENTRO del marco que ya trae la imagen;
                no dibujamos molduras encima. */
-            html.scene-on .diploma-unit:nth-child(1) { left: 32.55%; top: 6.80%;  width: 10.15%; height: 23.80%; }
-            html.scene-on .diploma-unit:nth-child(2) { left: 46.05%; top: 5.30%;  width: 11.90%; height: 27.60%; }
-            html.scene-on .diploma-unit:nth-child(3) { left: 61.55%; top: 7.00%;  width:  9.90%; height: 23.10%; }
-            html.scene-on .diploma-unit:nth-child(4) { left: 34.40%; top: 38.10%; width: 10.80%; height: 16.70%; }
-            html.scene-on .diploma-unit:nth-child(5) { left: 58.55%; top: 38.10%; width: 10.90%; height: 16.70%; }
+            html.scene-on .diploma-unit:nth-child(1) { left: 32.52%; top:  8.23%; width: 10.56%; height: 23.52%; }
+            html.scene-on .diploma-unit:nth-child(2) { left: 46.62%; top:  6.41%; width: 11.59%; height: 25.80%; }
+            html.scene-on .diploma-unit:nth-child(3) { left: 61.53%; top:  8.29%; width:  9.92%; height: 23.32%; }
+            html.scene-on .diploma-unit:nth-child(4) { left: 34.33%; top: 37.66%; width: 11.02%; height: 16.03%; }
+            html.scene-on .diploma-unit:nth-child(5) { left: 58.18%; top: 37.66%; width: 11.16%; height: 16.09%; }
 
             /* Respetamos el marco dorado de la foto: nuestra unidad no dibuja
                moldura, solo ocupa el vano con su paspartú y el diploma. */
@@ -1586,7 +1586,7 @@
         <section class="wall-section">
             <!-- Foto real del despacho. Los cuadros se posicionan encima del muro. -->
             <img id="office-photo" class="office-photo" alt="Despacho de Daniel Figueroa Chacama"
-                 width="2000" height="1076" fetchpriority="high" decoding="async">
+                 width="2816" height="1536" fetchpriority="high" decoding="async">
             <div class="frames-grid">
 
                 <!-- Cuadro 1: Ingeniería en Informática -->
