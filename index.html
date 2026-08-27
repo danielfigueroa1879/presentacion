@@ -1341,8 +1341,8 @@
         html.scene-on .diploma-unit.active .diploma-frame::before { inset: 16px; border-width: 2px; }
         html.scene-on .diploma-unit.active .diploma-content {
             height: auto;
-            min-height: 360px;
-            padding: 28px 26px;
+            min-height: 0;           /* el marco se ajusta al alto del diploma */
+            padding: 16px;
         }
         html.scene-on .diploma-unit.active .diploma-content::before {
             inset: 12px;
@@ -1353,10 +1353,17 @@
         }
         html.scene-on .diploma-unit.active .diploma-image-wrap {
             aspect-ratio: auto;
-            max-height: 60vh;
+            width: 100%;
+            height: auto;            /* la caja envuelve la imagen, sin crema sobrante */
+            max-height: 72vh;
             background: #fff;
         }
-        html.scene-on .diploma-unit.active .diploma-image-wrap img { filter: none; }
+        html.scene-on .diploma-unit.active .diploma-image-wrap img {
+            height: auto;            /* alto natural del diploma (no estirado) */
+            max-height: 72vh;
+            object-fit: contain;
+            filter: none;
+        }
         html.scene-on .diploma-unit.active .diploma-zoom-icon {
             opacity: 1;
             top: 18px; right: 18px;
@@ -1366,7 +1373,7 @@
         html.scene-on .diploma-unit.active .frame-hint { display: none; }
         html.scene-on .diploma-unit.active .leather-plaque { display: block; }
         @media (min-width: 768px) {
-            html.scene-on .diploma-unit.active .diploma-content { min-height: 420px; }
+            html.scene-on .diploma-unit.active .diploma-content { min-height: 0; }
         }
 
         /* Con la foto puesta sobran el escritorio y la persona dibujados;
