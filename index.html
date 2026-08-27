@@ -415,6 +415,265 @@
             .diploma-unit:nth-child(5) { grid-column: 4 / span 2; width: auto; margin-inline: 0; }
         }
 
+        /* =========================================================
+           ESCENA REAL DEL DESPACHO (foto de fondo)
+           Los cuadros se montan sobre el muro de la foto y conservan
+           exactamente la misma interacción (acercar → lupa con zoom).
+           ========================================================= */
+        .office-photo { display: none; }
+        .frame-hint { display: none; }
+
+        @media (min-width: 900px) {
+            /* La foto se muestra de borde a borde para que el despacho envuelva */
+            html.scene-on .office-photo {
+                display: block;
+                width: 100vw;
+                margin-left: calc(50% - 50vw);
+                height: auto;
+                border-bottom: 4px solid rgba(20,10,4,0.85);
+                box-shadow: 0 26px 60px rgba(0,0,0,0.75);
+            }
+            html.scene-on .wall-section { padding: 0 0 34px; }
+            /* La rejilla se convierte en capa de posicionamiento sobre la foto */
+            html.scene-on .frames-grid {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: calc(50% - 50vw);
+                width: 100vw;
+                /* La foto mide 2000x1076 → alto = ancho / 1.859 */
+                height: calc(100vw / 1.859);
+                gap: 0;
+                pointer-events: none;
+            }
+            html.scene-on .diploma-unit {
+                position: absolute;
+                display: block;
+                width: auto; height: auto;
+                margin: 0;
+                gap: 0;
+                pointer-events: auto;
+            }
+            /* Coordenadas medidas sobre la foto (porcentajes del muro) */
+            html.scene-on .diploma-unit:nth-child(1) { left: 31.50%; top: 4.85%;  width: 12.10%; height: 27.70%; }
+            html.scene-on .diploma-unit:nth-child(2) { left: 44.85%; top: 3.25%;  width: 14.30%; height: 31.90%; }
+            html.scene-on .diploma-unit:nth-child(3) { left: 60.40%; top: 5.10%;  width: 12.10%; height: 27.20%; }
+            html.scene-on .diploma-unit:nth-child(4) { left: 33.60%; top: 36.40%; width: 12.50%; height: 19.80%; }
+            html.scene-on .diploma-unit:nth-child(5) { left: 57.60%; top: 36.40%; width: 12.50%; height: 19.80%; }
+
+            /* El marco ocupa todo el hueco del muro y el paspartú rellena el resto */
+            html.scene-on .diploma-unit .diploma-frame {
+                height: 100%;
+                padding: 0.85vw;
+                border-radius: 2px;
+                box-shadow:
+                    0 1.1vw 2.2vw -0.6vw rgba(0,0,0,0.85),
+                    inset 0 1px 1px rgba(255,238,180,0.8),
+                    inset 0 -2px 3px rgba(80,55,10,0.7);
+            }
+            html.scene-on .diploma-unit .diploma-frame::before { inset: 0.55vw; border-width: 1px; }
+            html.scene-on .diploma-unit .diploma-content {
+                height: 100%;
+                padding: 0.7vw;
+            }
+            html.scene-on .diploma-unit .diploma-content::before { inset: 0.4vw; box-shadow: 0 0 0 2px #efe3c4; }
+            html.scene-on .diploma-unit .diploma-image-wrap {
+                aspect-ratio: auto;
+                height: 100%;
+            }
+            html.scene-on .diploma-unit .diploma-zoom-icon {
+                top: 0.6vw; right: 0.6vw;
+                width: 1.9vw; height: 1.9vw;
+                min-width: 20px; min-height: 20px;
+                font-size: 0.95vw;
+                opacity: 0;
+            }
+            html.scene-on .diploma-unit:hover .diploma-zoom-icon,
+            html.scene-on .diploma-unit:focus-visible .diploma-zoom-icon { opacity: 1; }
+
+            /* Sobre la foto el muro no tiene sitio para las placas:
+               los títulos viven en la galería de bronce bajo la escena
+               y en el propio cuadro cuando se acerca al frente. */
+            html.scene-on .diploma-unit .title-plate { display: none; }
+            /* Etiqueta breve al pasar el mouse por el cuadro */
+            html.scene-on .diploma-unit .frame-hint {
+                display: block;
+                position: absolute;
+                top: calc(100% + 0.4vw);
+                left: 50%;
+                transform: translateX(-50%) translateY(-4px);
+                white-space: nowrap;
+                font-family: 'Cinzel', serif;
+                font-size: 0.8vw;
+                letter-spacing: 0.05em;
+                color: #ffe9b8;
+                background: rgba(18,10,4,0.86);
+                border: 1px solid rgba(242,212,120,0.5);
+                border-radius: 3px;
+                padding: 0.3vw 0.6vw;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.25s, transform 0.25s;
+                z-index: 4;
+            }
+            html.scene-on .diploma-unit:hover .frame-hint,
+            html.scene-on .diploma-unit:focus-visible .frame-hint {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+            /* Al pasar el mouse, el cuadro se adelanta un poco sobre el muro */
+            html.scene-on .diploma-unit .diploma-frame:hover {
+                transform: scale(1.045);
+                z-index: 3;
+            }
+            html.scene-on .diploma-unit:hover { z-index: 3; }
+
+            /* El cuadro enfocado recupera su tamaño grande y se centra
+               en pantalla, igual que sin la foto (paso 1 de la interacción) */
+            html.scene-on .diploma-unit.active {
+                position: fixed;
+                top: 50%; left: 50%;
+                transform: translate(-50%, -50%);
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+                width: min(90vw, 760px);
+                height: auto;
+                max-height: 92vh;
+                z-index: 100;
+                pointer-events: auto;
+            }
+            html.scene-on .diploma-unit.active .diploma-frame {
+                height: auto;
+                padding: 18px;
+                transform: none;
+                box-shadow:
+                    0 26px 45px -14px rgba(0,0,0,0.9),
+                    inset 0 2px 2px rgba(255,238,180,0.8),
+                    inset 0 -3px 5px rgba(80,55,10,0.7);
+            }
+            html.scene-on .diploma-unit.active .diploma-frame::before { inset: 12px; border-width: 2px; }
+            html.scene-on .diploma-unit.active .diploma-content { height: auto; padding: 22px; }
+            html.scene-on .diploma-unit.active .diploma-content::before { inset: 13px; box-shadow: 0 0 0 3px #efe3c4, 0 0 0 4px rgba(139,105,20,0.5); }
+            html.scene-on .diploma-unit.active .diploma-image-wrap { aspect-ratio: 4 / 3; height: auto; }
+            html.scene-on .diploma-unit.active .diploma-zoom-icon {
+                opacity: 1;
+                top: 16px; right: 16px;
+                width: 44px; height: 44px;
+                font-size: 20px;
+            }
+            html.scene-on .diploma-unit.active .frame-hint { display: none; }
+            html.scene-on .diploma-unit.active .title-plate {
+                display: block;
+                position: static;
+                transform: none;
+                width: 100%;
+                max-width: 520px;
+                margin: 0 auto;
+                padding: 10px 14px 11px;
+                border-radius: 4px;
+            }
+            html.scene-on .diploma-unit.active .title-plate .rivet { display: block; }
+            html.scene-on .diploma-unit.active .plate-tag { display: block; }
+            html.scene-on .diploma-unit.active .plate-title {
+                font-size: 1.12rem;
+                white-space: normal;
+                min-height: 2.44em;
+                display: flex;
+            }
+
+            /* Con la foto puesta sobran la pared y los adornos dibujados */
+            html.scene-on .bookcase,
+            html.scene-on .crest,
+            html.scene-on .flags,
+            html.scene-on .wall-section::after,
+            html.scene-on .person-holder,
+            html.scene-on .banker-lamp,
+            html.scene-on .desk-globe { display: none; }
+            html.scene-on .desk-section { margin-top: 0; }
+            html.scene-on .desk-items { padding-top: 16px; }
+        }
+
+        /* ===== GALERÍA DE TÍTULOS BAJO LA ESCENA (solo con la foto puesta) ===== */
+        .title-index { display: none; }
+        @media (min-width: 900px) {
+            html.scene-on .title-index {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: clamp(8px, 1vw, 14px);
+                margin: clamp(16px, 2vw, 26px) auto 0;
+                width: 100%;
+            }
+            .index-plate {
+                position: relative;
+                text-align: center;
+                padding: 9px 12px 10px;
+                border: 1px solid rgba(255,232,160,0.45);
+                border-radius: 4px;
+                cursor: pointer;
+                font: inherit;
+                background:
+                    linear-gradient(180deg, rgba(255,240,190,0.28) 0%, transparent 45%),
+                    linear-gradient(180deg, #6b4f14 0%, #a8842c 22%, #d9b558 50%, #8b6914 78%, #4a3308 100%);
+                box-shadow:
+                    0 10px 20px rgba(0,0,0,0.6),
+                    inset 0 1px 0 rgba(255,244,200,0.65),
+                    inset 0 -2px 5px rgba(0,0,0,0.45);
+                transition: transform 0.25s, box-shadow 0.25s;
+            }
+            html.light .index-plate {
+                background: linear-gradient(180deg, #f7edd0 0%, #e2cd9b 55%, #c7ab73 100%);
+                border-color: rgba(120,90,20,0.5);
+            }
+            .index-plate:hover, .index-plate:focus-visible {
+                transform: translateY(-3px);
+                box-shadow:
+                    0 16px 26px rgba(0,0,0,0.65),
+                    0 0 26px rgba(242,212,120,0.35),
+                    inset 0 1px 0 rgba(255,244,200,0.8);
+            }
+            .index-plate .idx-tag {
+                display: block;
+                font-family: 'Cinzel', serif;
+                font-size: clamp(7.5px, 0.58vw, 9px);
+                letter-spacing: 0.2em;
+                text-transform: uppercase;
+                color: #2b1c04;
+                opacity: 0.88;
+                margin-bottom: 3px;
+                line-height: 1.3;
+            }
+            .index-plate .idx-title {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: 'Playfair Display', serif;
+                font-weight: 700;
+                font-size: clamp(0.86rem, 0.78vw + 0.3rem, 1.05rem);
+                line-height: 1.22;
+                min-height: 2.44em;
+                color: #241703;
+                text-shadow: 0 1px 0 rgba(255,240,190,0.55);
+                text-wrap: balance;
+            }
+        }
+
+        /* En celular la foto va de cabecera y los cuadros quedan abajo, grandes */
+        @media (max-width: 899px) {
+            html.scene-on .office-photo {
+                display: block;
+                width: 100vw;
+                margin-left: calc(50% - 50vw);
+                height: clamp(190px, 42vh, 330px);
+                object-fit: cover;
+                object-position: 50% 30%;
+                margin-bottom: clamp(20px, 5vw, 30px);
+                border-top: 3px solid rgba(20,10,4,0.8);
+                border-bottom: 3px solid rgba(20,10,4,0.8);
+                box-shadow: 0 16px 34px rgba(0,0,0,0.6);
+            }
+        }
+
         /* Unidad = marco + placa con el título, siempre alineados */
         .diploma-unit {
             display: flex;
@@ -1271,6 +1530,9 @@
 
         <!-- ===== PARED CON LOS CUADROS (3 arriba · 2 abajo) ===== -->
         <section class="wall-section">
+            <!-- Foto real del despacho. Los cuadros se posicionan encima del muro. -->
+            <img id="office-photo" class="office-photo" alt="Despacho de Daniel Figueroa Chacama"
+                 width="2000" height="1076" fetchpriority="high" decoding="async">
             <div class="frames-grid">
 
                 <!-- Cuadro 1: Ingeniería en Informática -->
@@ -1378,6 +1640,8 @@
                     </div>
                 </article>
             </div>
+            <!-- Galería de títulos: se arma sola a partir de los cuadros -->
+            <div class="title-index" id="title-index" aria-label="Títulos y diplomas"></div>
         </section>
 
         <!-- ===== ESCRITORIO ===== -->
@@ -1527,6 +1791,35 @@
             }
             applyTheme();
         });
+
+        /* ===== ESCENA REAL DEL DESPACHO =====
+           Si existe la foto del despacho, los cuadros se montan sobre su muro.
+           Si no está (o falla la descarga), la página vuelve sola a la pared
+           dibujada, sin perder ninguna funcionalidad. */
+        (function () {
+            const photo = document.getElementById('office-photo');
+            if (!photo) return;
+            const candidatos = ['images/oficina.webp', 'images/oficina.png', 'images/oficina.jpg'];
+            let i = 0;
+
+            function activar() {
+                html.classList.add('scene-on');
+            }
+            function siguiente() {
+                i++;
+                if (i < candidatos.length) {
+                    photo.src = candidatos[i] + '?v=5';
+                } else {
+                    html.classList.remove('scene-on');
+                    photo.remove();
+                }
+            }
+
+            photo.addEventListener('load', activar);
+            photo.addEventListener('error', siguiente);
+            photo.src = candidatos[0] + '?v=5';
+            if (photo.complete && photo.naturalWidth > 0) activar();
+        })();
 
         /* ===== VISOR DE DIPLOMA CON ZOOM (lupa) ===== */
         const overlay   = document.getElementById('focus-overlay');
@@ -1701,6 +1994,35 @@
                 unfocusFrame();
             }
         });
+
+        /* Etiqueta al pasar el mouse sobre cada cuadro del muro y galería de
+           títulos bajo la escena: ambas salen del mismo marcado, sin repetirlo. */
+        (function () {
+            const unidades = [...document.querySelectorAll('.diploma-unit')];
+            const indice = document.getElementById('title-index');
+
+            unidades.forEach((unit) => {
+                const titulo = unit.querySelector('.plate-title');
+                const tag = unit.querySelector('.plate-tag');
+                if (!titulo) return;
+
+                // Etiqueta breve sobre la foto
+                const hint = document.createElement('span');
+                hint.className = 'frame-hint';
+                hint.textContent = titulo.textContent;
+                unit.appendChild(hint);
+
+                if (!indice) return;
+                const chapa = document.createElement('button');
+                chapa.type = 'button';
+                chapa.className = 'index-plate';
+                chapa.innerHTML = '<span class="idx-tag"></span><span class="idx-title"></span>';
+                chapa.querySelector('.idx-tag').textContent = tag ? tag.textContent : '';
+                chapa.querySelector('.idx-title').textContent = titulo.textContent;
+                chapa.addEventListener('click', (e) => handleUnitClick(unit, e));
+                indice.appendChild(chapa);
+            });
+        })();
 
         // Los cuadros también se abren con teclado (Enter o barra espaciadora)
         document.querySelectorAll('.diploma-unit').forEach((unit) => {
