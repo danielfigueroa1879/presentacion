@@ -1213,15 +1213,15 @@
         /* Ubicación de cada marco sobre el muro central limpio.
            Fila superior: 3 marcos. Fila inferior: 2 marcos que flanquean
            a la persona (sin taparla). Porcentajes del recuadro de la foto. */
-        html.scene-on .diploma-unit:nth-child(1) { left: 32.0%; top: 9%;  width: 10.6%; height: 24%; }
-        html.scene-on .diploma-unit:nth-child(2) { left: 44.7%; top: 9%;  width: 10.6%; height: 24%; }
-        html.scene-on .diploma-unit:nth-child(3) { left: 57.4%; top: 9%;  width: 10.6%; height: 24%; }
-        html.scene-on .diploma-unit:nth-child(4) { left: 31.0%; top: 35%; width: 10.6%; height: 24%; }
-        html.scene-on .diploma-unit:nth-child(5) { left: 58.4%; top: 35%; width: 10.6%; height: 24%; }
+        html.scene-on .diploma-unit:nth-child(1) { left: 32.0%; top: 9%;  width: 11.6%; }
+        html.scene-on .diploma-unit:nth-child(2) { left: 44.2%; top: 9%;  width: 11.6%; }
+        html.scene-on .diploma-unit:nth-child(3) { left: 56.4%; top: 9%;  width: 11.6%; }
+        html.scene-on .diploma-unit:nth-child(4) { left: 30.5%; top: 36%; width: 11.6%; }
+        html.scene-on .diploma-unit:nth-child(5) { left: 57.9%; top: 36%; width: 11.6%; }
 
         /* El marco conserva su moldura de nogal, escalada al porte del muro */
         html.scene-on .diploma-unit .diploma-frame {
-            height: 100%;
+            height: auto;
             padding: clamp(4px, 0.65vw, 12px);
             border-radius: 2px;
             box-shadow:
@@ -1238,7 +1238,7 @@
             border-width: clamp(1px, 0.15vw, 2px);
         }
         html.scene-on .diploma-unit .diploma-content {
-            height: 100%;
+            height: auto;
             min-height: 0;
             padding: clamp(3px, 0.45vw, 9px);
             box-shadow:
@@ -1253,11 +1253,12 @@
                 inset 0 3px 8px rgba(0,0,0,0.18);
         }
         html.scene-on .diploma-unit .diploma-image-wrap {
-            aspect-ratio: auto;
-            height: 100%;
+            aspect-ratio: 1.38 / 1;   /* caja apaisada uniforme; el diploma llena arriba y abajo */
+            height: auto;
             background: linear-gradient(180deg, #f7efdc 0%, #eadfc5 55%, #ded0ac 100%);
         }
         html.scene-on .diploma-unit .diploma-image-wrap img {
+            height: 100%;
             object-fit: contain;
             filter: drop-shadow(0 0.1vw 0.28vw rgba(0,0,0,0.4));
         }
