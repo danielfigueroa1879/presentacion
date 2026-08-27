@@ -1213,11 +1213,14 @@
         /* Ubicación de cada marco sobre el muro central limpio.
            Fila superior: 3 marcos. Fila inferior: 2 marcos que flanquean
            a la persona (sin taparla). Porcentajes del recuadro de la foto. */
-        html.scene-on .diploma-unit:nth-child(1) { left: 31.0%; top: 5.5%;  width: 12.4%; }
-        html.scene-on .diploma-unit:nth-child(2) { left: 43.8%; top: 5.5%;  width: 12.4%; }
-        html.scene-on .diploma-unit:nth-child(3) { left: 56.6%; top: 5.5%;  width: 12.4%; }
-        html.scene-on .diploma-unit:nth-child(4) { left: 29.5%; top: 27%;   width: 11.0%; }
-        html.scene-on .diploma-unit:nth-child(5) { left: 58.7%; top: 27%;   width: 12.4%; }
+        /* Tres marcos arriba, en columnas y con más separación entre sí.
+           Abajo: condecoración (columna izq.) e IACC (columna der.), alineados
+           con las columnas de arriba para dar orden de cuadrícula. */
+        html.scene-on .diploma-unit:nth-child(1) { left: 30.5%; top: 5%;   width: 11.4%; }
+        html.scene-on .diploma-unit:nth-child(2) { left: 44.3%; top: 5%;   width: 11.4%; }
+        html.scene-on .diploma-unit:nth-child(3) { left: 58.1%; top: 5%;   width: 11.4%; }
+        html.scene-on .diploma-unit:nth-child(4) { left: 30.5%; top: 30%;  width: 11.0%; }
+        html.scene-on .diploma-unit:nth-child(5) { left: 58.1%; top: 30%;  width: 11.4%; }
 
         /* El marco conserva su moldura de nogal, escalada al porte del muro */
         html.scene-on .diploma-unit .diploma-frame {
@@ -1252,19 +1255,25 @@
                 0 0 0 3px rgba(139,105,20,0.5),
                 inset 0 3px 8px rgba(0,0,0,0.18);
         }
+        /* Los diplomas apaisados comparten el MISMO porte (misma caja 1.42).
+           object-fit: contain nunca recorta: como las imágenes ya vienen
+           completas y su proporción es ~1.42, no hay recorte ni crema sobrante. */
         html.scene-on .diploma-unit .diploma-image-wrap {
-            aspect-ratio: auto;      /* cada marco toma la forma natural de su diploma */
+            aspect-ratio: 1.42 / 1;
             width: 100%;
             height: auto;
             background: linear-gradient(180deg, #f7efdc 0%, #eadfc5 55%, #ded0ac 100%);
         }
         html.scene-on .diploma-unit .diploma-image-wrap img {
             width: 100%;
-            height: auto;            /* diploma completo, sin recortes ni crema sobrante */
+            height: 100%;
             object-fit: contain;
             display: block;
             filter: drop-shadow(0 0.1vw 0.28vw rgba(0,0,0,0.4));
         }
+        /* La condecoración (20 años) conserva su formato vertical natural */
+        html.scene-on .diploma-unit:nth-child(4) .diploma-image-wrap { aspect-ratio: auto; }
+        html.scene-on .diploma-unit:nth-child(4) .diploma-image-wrap img { height: auto; }
         html.scene-on .diploma-unit .diploma-zoom-icon {
             top: 0.5vw; right: 0.5vw;
             width: clamp(18px, 1.9vw, 30px);
