@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" class="dark">
+<html lang="es" class="dark scene-on">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1213,11 +1213,11 @@
         /* Ubicación de cada marco sobre el muro central limpio.
            Fila superior: 3 marcos. Fila inferior: 2 marcos que flanquean
            a la persona (sin taparla). Porcentajes del recuadro de la foto. */
-        html.scene-on .diploma-unit:nth-child(1) { left: 32.0%; top: 4.5%;  width: 11.3%; height: 27%; }
-        html.scene-on .diploma-unit:nth-child(2) { left: 44.35%; top: 4.5%; width: 11.3%; height: 27%; }
-        html.scene-on .diploma-unit:nth-child(3) { left: 56.7%; top: 4.5%;  width: 11.3%; height: 27%; }
-        html.scene-on .diploma-unit:nth-child(4) { left: 31.0%; top: 35%;   width: 10.6%; height: 24%; }
-        html.scene-on .diploma-unit:nth-child(5) { left: 58.4%; top: 35%;   width: 10.6%; height: 24%; }
+        html.scene-on .diploma-unit:nth-child(1) { left: 32.0%; top: 9%;  width: 10.6%; height: 24%; }
+        html.scene-on .diploma-unit:nth-child(2) { left: 44.7%; top: 9%;  width: 10.6%; height: 24%; }
+        html.scene-on .diploma-unit:nth-child(3) { left: 57.4%; top: 9%;  width: 10.6%; height: 24%; }
+        html.scene-on .diploma-unit:nth-child(4) { left: 31.0%; top: 35%; width: 10.6%; height: 24%; }
+        html.scene-on .diploma-unit:nth-child(5) { left: 58.4%; top: 35%; width: 10.6%; height: 24%; }
 
         /* El marco conserva su moldura de nogal, escalada al porte del muro */
         html.scene-on .diploma-unit .diploma-frame {
@@ -1481,6 +1481,7 @@
         <section class="wall-section">
             <!-- Foto real del despacho. Los marcos se montan sobre el muro central. -->
             <img id="office-photo" class="office-photo" alt="Despacho de Daniel Figueroa Chacama"
+                 src="images/oficina.webp?v=7"
                  width="1698" height="926" fetchpriority="high" decoding="async">
             <!-- Copia de la misma foto, recortada a la silla/persona: queda al frente -->
             <img id="office-front" class="office-front" alt="" aria-hidden="true"
@@ -1742,9 +1743,11 @@
         });
 
         /* ===== ESCENA REAL DEL DESPACHO =====
-           Si la foto del despacho carga, los marcos se montan sobre su muro.
-           Si falla, la página vuelve sola a la escena dibujada por CSS sin
-           perder ninguna funcionalidad. */
+           La escena arranca ya activa (`scene-on` en el <html> y la foto con
+           su `src` en el HTML) para que NO se vea primero la escena dibujada
+           por CSS y luego la foto. Este bloque solo maneja el respaldo: si la
+           foto no carga, prueba otros formatos y, si ninguno existe, vuelve
+           sola a la escena CSS sin perder ninguna funcionalidad. */
         (function () {
             const photo = document.getElementById('office-photo');
             const front = document.getElementById('office-front');
@@ -1752,10 +1755,6 @@
             const candidatos = ['images/oficina.webp', 'images/oficina.png', 'images/oficina.jpg'];
             let i = 0;
 
-            function activar() {
-                html.classList.add('scene-on');
-                if (front) front.src = photo.src;
-            }
             function siguiente() {
                 i++;
                 if (i < candidatos.length) {
@@ -1766,10 +1765,9 @@
                     if (front) front.remove();
                 }
             }
-            photo.addEventListener('load', activar);
             photo.addEventListener('error', siguiente);
-            photo.src = candidatos[0] + '?v=7';
-            if (photo.complete && photo.naturalWidth > 0) activar();
+            // Si la foto ya falló antes de registrar el listener, reintenta.
+            if (photo.complete && photo.naturalWidth === 0) siguiente();
         })();
 
         /* Etiqueta al pasar el mouse sobre cada cuadro y galería de títulos
