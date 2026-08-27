@@ -69,10 +69,10 @@
             font-family: 'Inter', sans-serif;
             color: var(--text-main);
             min-height: 100vh;
-            /* Fondo: despacho presidencial de madera noble */
+            /* Fondo: pared de madera cálida bien iluminada */
             background:
-                radial-gradient(ellipse at 50% 8%, rgba(255,200,120,0.4) 0%, rgba(120,70,30,0.15) 35%, transparent 65%),
-                linear-gradient(180deg, #3a1c0c 0%, #2a1408 55%, #180b04 100%);
+                radial-gradient(ellipse at 50% 12%, rgba(255,190,110,0.55) 0%, rgba(180,110,55,0.25) 35%, transparent 65%),
+                linear-gradient(180deg, #5a2f14 0%, #3a1c0c 55%, #2a1408 100%);
             transition: background 0.6s ease, color 0.6s ease;
             position: relative;
         }
@@ -83,158 +83,39 @@
                 linear-gradient(180deg, #d9b98a 0%, #a67c52 60%, #7a5535 100%);
         }
 
-        /* ===== PARED DE MADERA (paneles verticales tipo despacho presidencial) ===== */
+        /* ===== PARED DE MADERA (paneles verticales con vetas) ===== */
         .wood-wall {
             position: fixed;
             inset: 0;
             z-index: -3;
             background-image:
-                /* Vetas horizontales de nogal */
-                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='600' viewBox='0 0 400 600'><defs><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9 0.02' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 0.10 0 0 0 0 0.05 0 0 0 0 0.02 0 0 0 0.45 0'/></filter></defs><rect width='400' height='600' filter='url(%23n)'/></svg>"),
-                /* Paneles rectangulares con moldura tallada */
+                /* Vetas horizontales sutiles (nogal veteado) */
+                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='600' viewBox='0 0 400 600'><defs><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9 0.02' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 0.18 0 0 0 0 0.09 0 0 0 0 0.04 0 0 0 0.3 0'/></filter></defs><rect width='400' height='600' filter='url(%23n)'/></svg>"),
+                /* Separación de paneles verticales */
                 repeating-linear-gradient(90deg,
                     transparent 0,
-                    transparent 218px,
-                    rgba(0,0,0,0.55) 220px,
-                    rgba(200,140,80,0.35) 222px,
-                    rgba(0,0,0,0.5) 224px,
-                    transparent 226px),
-                /* Base warm walnut más oscuro y noble */
-                linear-gradient(180deg, #4a2510 0%, #3a1c0c 45%, #26130a 100%);
+                    transparent 179px,
+                    rgba(0,0,0,0.35) 179px,
+                    rgba(0,0,0,0.5) 180px,
+                    rgba(220,160,100,0.28) 181px,
+                    transparent 183px),
+                /* Base warm walnut iluminado */
+                linear-gradient(180deg, #6b3a1c 0%, #4a2510 50%, #3a1c0c 100%);
             background-size: 400px 600px, auto, auto;
-            opacity: 0.95;
+            opacity: 0.92;
         }
         html.light .wood-wall {
             background:
                 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='600' viewBox='0 0 400 600'><defs><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9 0.02' numOctaves='2' seed='7'/><feColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.20 0 0 0 0 0.08 0 0 0 0.28 0'/></filter></defs><rect width='400' height='600' filter='url(%23n)'/></svg>"),
                 repeating-linear-gradient(90deg,
                     transparent 0,
-                    transparent 218px,
-                    rgba(90,50,20,0.4) 220px,
-                    rgba(255,220,170,0.35) 222px,
-                    rgba(90,50,20,0.5) 224px,
-                    transparent 226px),
+                    transparent 179px,
+                    rgba(90,50,20,0.4) 179px,
+                    rgba(90,50,20,0.55) 180px,
+                    rgba(255,220,170,0.3) 181px,
+                    transparent 183px),
                 linear-gradient(180deg, #d9b98a 0%, #b8865a 45%, #96683a 100%);
             background-size: 400px 600px, auto, auto;
-        }
-
-        /* ===== BIBLIOTECA DE FONDO (estanterías con libros antiguos) ===== */
-        .bookshelf {
-            position: fixed;
-            top: 60px;
-            bottom: 40%;
-            width: 12vw;
-            max-width: 160px;
-            min-width: 90px;
-            z-index: -2;
-            pointer-events: none;
-            opacity: 0.85;
-            /* Repite filas de estantes con libros de colores nobles */
-            background:
-                /* Estantes horizontales de madera */
-                repeating-linear-gradient(180deg,
-                    transparent 0px,
-                    transparent 78px,
-                    rgba(0,0,0,0.55) 78px,
-                    #3a1c0c 80px,
-                    #6b3a1c 82px,
-                    rgba(0,0,0,0.6) 84px,
-                    transparent 86px),
-                /* Lomos de libros de varios colores (repetido irregular) */
-                repeating-linear-gradient(90deg,
-                    #4a2818 0px, #4a2818 8px,
-                    #2a1408 8px, #2a1408 10px,
-                    #6b2018 10px, #6b2018 22px,
-                    #2a1408 22px, #2a1408 24px,
-                    #3a1e14 24px, #3a1e14 34px,
-                    #1a0d08 34px, #1a0d08 36px,
-                    #5c2010 36px, #5c2010 48px,
-                    #2a1408 48px, #2a1408 50px,
-                    #402818 50px, #402818 62px,
-                    #1a0d08 62px, #1a0d08 64px,
-                    #3a1c0c 64px, #3a1c0c 76px,
-                    #2a1408 76px, #2a1408 78px),
-                linear-gradient(180deg, #2a1408 0%, #180b04 100%);
-            background-size: auto, 84px 78px, auto;
-            box-shadow:
-                inset 0 0 40px rgba(0,0,0,0.7),
-                inset 0 -8px 20px rgba(0,0,0,0.5);
-            filter: brightness(0.75) contrast(1.05);
-        }
-        .bookshelf.left { left: 0; border-right: 3px solid #1a0d05; }
-        .bookshelf.right { right: 0; border-left: 3px solid #1a0d05; }
-        @media (max-width: 767px) {
-            .bookshelf { display: none; }
-        }
-
-        /* ===== BANDERAS CHILENAS (derecha, ondeantes) ===== */
-        .chile-flags {
-            position: fixed;
-            right: 8px;
-            top: 42%;
-            transform: translateY(-50%);
-            z-index: -1;
-            display: flex;
-            gap: 4px;
-            pointer-events: none;
-            opacity: 0.9;
-            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.6));
-        }
-        .chile-flag {
-            width: 60px;
-            height: 100px;
-            position: relative;
-            background:
-                /* Estrella blanca sobre el cuadrado azul (arriba izq) */
-                radial-gradient(circle at 25% 25%, #fff 3px, transparent 4px),
-                /* Franja azul (arriba izq, un tercio) */
-                linear-gradient(180deg, #0033a0 50%, transparent 50%),
-                /* Blanco arriba, rojo abajo */
-                linear-gradient(180deg, #fff 0%, #fff 50%, #d52b1e 50%, #d52b1e 100%);
-            background-size:
-                50% 50%,
-                50% 100%,
-                100% 100%;
-            background-position:
-                0 0,
-                0 0,
-                0 0;
-            background-repeat: no-repeat;
-            border: 1px solid rgba(0,0,0,0.5);
-            border-radius: 1px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            animation: flagWave 4s ease-in-out infinite;
-            transform-origin: left center;
-        }
-        .chile-flag.f2 {
-            animation-delay: -1.5s;
-            width: 55px;
-            height: 92px;
-        }
-        @keyframes flagWave {
-            0%, 100% { transform: skewY(-1deg) rotate(-1deg); }
-            50%      { transform: skewY(1deg) rotate(1deg); }
-        }
-        @media (max-width: 767px) {
-            .chile-flags { display: none; }
-        }
-
-        /* ===== ESCUDO NACIONAL DE CHILE (izquierda) ===== */
-        .coat-of-arms {
-            position: fixed;
-            left: 12px;
-            top: 30%;
-            transform: translateY(-50%);
-            z-index: -1;
-            width: 100px;
-            height: 130px;
-            pointer-events: none;
-            opacity: 0.85;
-            filter: drop-shadow(0 6px 15px rgba(0,0,0,0.55));
-        }
-        .coat-of-arms svg { width: 100%; height: 100%; }
-        @media (max-width: 767px) {
-            .coat-of-arms { display: none; }
         }
 
         /* Halo cálido de lámpara sobre la pared — más intenso */
@@ -422,75 +303,72 @@
             .frames-grid { grid-template-columns: repeat(3, 1fr); gap: 36px; padding-top: 20px; }
         }
 
-        /* Marco DORADO clásico tallado — estilo despacho presidencial */
+        /* Marco de madera tallado — nogal con moldura ornamental */
         .diploma-frame {
             position: relative;
             cursor: pointer;
-            padding: 20px;
+            padding: 22px;
             border-radius: 3px;
             background:
-                /* Textura de dorado envejecido */
-                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='300'><defs><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='1.5 0.5' numOctaves='2' seed='9'/><feColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.42 0 0 0 0 0.15 0 0 0 0.28 0'/></filter></defs><rect width='200' height='300' filter='url(%23g)'/></svg>"),
-                /* Molduras de oro cincelado */
+                /* Vetas de nogal */
+                url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='300'><defs><filter id='w'><feTurbulence type='fractalNoise' baseFrequency='2 0.04' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.08 0 0 0 0 0.03 0 0 0 0 0.01 0 0 0 0.5 0'/></filter></defs><rect width='200' height='300' filter='url(%23w)'/></svg>"),
+                /* Bevel exterior */
                 linear-gradient(135deg,
-                    #8b6914 0%,
-                    #c9a961 15%,
-                    #ffdb70 30%,
-                    #f2d478 45%,
-                    #c9a961 60%,
-                    #b8860b 78%,
-                    #6b4f10 100%);
+                    #6b3a1c 0%,
+                    #4a250f 20%,
+                    #8b5a2e 45%,
+                    #b07a45 55%,
+                    #6b3a1c 75%,
+                    #2e1608 100%);
             background-size: 200px 300px, auto;
             box-shadow:
-                /* Sombra proyectada intensa sobre la pared oscura */
-                0 32px 55px -12px rgba(0,0,0,0.95),
-                0 18px 28px -8px rgba(0,0,0,0.7),
-                0 8px 12px rgba(0,0,0,0.55),
-                /* Bevel iluminación dorada */
-                inset 0 2px 2px rgba(255,235,170,0.85),
-                inset 0 -3px 5px rgba(80,55,10,0.7),
-                inset 3px 0 3px rgba(255,220,140,0.4),
-                inset -3px 0 3px rgba(80,55,10,0.5),
-                /* Halo dorado tenue */
-                0 0 25px rgba(242,212,120,0.2);
+                /* Sombra proyectada sobre la pared */
+                0 30px 50px -12px rgba(0,0,0,0.9),
+                0 15px 25px -8px rgba(0,0,0,0.6),
+                0 6px 10px rgba(0,0,0,0.5),
+                /* Bevel iluminación */
+                inset 0 2px 2px rgba(220,170,110,0.5),
+                inset 0 -3px 4px rgba(0,0,0,0.7),
+                inset 3px 0 3px rgba(0,0,0,0.35),
+                inset -3px 0 3px rgba(0,0,0,0.5);
             transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.5s;
         }
         .diploma-frame:hover:not(.active) {
             transform: translateY(-8px) rotateX(2deg);
             box-shadow:
-                0 48px 70px -12px rgba(0,0,0,0.98),
-                0 25px 35px -8px rgba(0,0,0,0.8),
-                0 0 60px rgba(242,212,120,0.5),
-                inset 0 2px 2px rgba(255,235,170,0.9),
-                inset 0 -3px 5px rgba(80,55,10,0.7);
+                0 45px 65px -12px rgba(0,0,0,0.95),
+                0 22px 32px -8px rgba(0,0,0,0.75),
+                0 0 50px rgba(201,169,97,0.35),
+                inset 0 2px 2px rgba(220,170,110,0.6),
+                inset 0 -3px 4px rgba(0,0,0,0.7);
         }
 
-        /* Filete oscuro interior (rebaje del marco) */
+        /* Filete dorado interior (molde ornamental) */
         .diploma-frame::before {
             content: '';
             position: absolute;
-            inset: 14px;
+            inset: 16px;
             border: 2px solid;
-            border-image: linear-gradient(135deg, #4a3308 0%, #2a1e05 40%, #6b4f10 70%, #4a3308 100%) 1;
+            border-image: linear-gradient(135deg, #ffdb70 0%, #c9a961 30%, #8b6914 60%, #c9a961 100%) 1;
             box-shadow:
-                inset 0 0 0 1px rgba(255,220,140,0.35),
-                0 0 0 1px rgba(80,55,10,0.6),
-                inset 0 1px 3px rgba(0,0,0,0.5);
+                inset 0 0 0 1px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(0,0,0,0.4),
+                inset 0 1px 2px rgba(255,220,150,0.4);
             pointer-events: none;
             z-index: 2;
         }
 
-        /* Brillo diagonal sobre el oro */
+        /* Reflejo diagonal sobre la madera */
         .diploma-frame::after {
             content: '';
             position: absolute;
             inset: 0;
             border-radius: 3px;
             background: linear-gradient(135deg,
-                rgba(255,245,200,0.35) 0%,
-                transparent 25%,
+                rgba(255,220,150,0.12) 0%,
+                transparent 30%,
                 transparent 70%,
-                rgba(50,35,5,0.3) 100%);
+                rgba(0,0,0,0.15) 100%);
             pointer-events: none;
             z-index: 1;
         }
@@ -889,184 +767,6 @@
             filter: blur(2px);
             z-index: -1;
             border-radius: 50% 50% 20% 20%;
-        }
-
-        /* ===== LÁMPARA VERDE DE BANQUERO (escritorio, lado izquierdo) ===== */
-        .banker-lamp {
-            position: absolute;
-            left: 20px;
-            top: -70px;
-            z-index: 4;
-            width: 90px;
-            height: 110px;
-            pointer-events: none;
-        }
-        .banker-lamp .shade {
-            position: absolute;
-            top: 0; left: 50%;
-            transform: translateX(-50%);
-            width: 78px;
-            height: 32px;
-            background:
-                radial-gradient(ellipse at 30% 30%, rgba(255,255,255,0.35) 0%, transparent 40%),
-                linear-gradient(180deg, #0f5c2d 0%, #1a7a3d 40%, #0a4020 100%);
-            border-radius: 50% 50% 30% 30% / 60% 60% 40% 40%;
-            box-shadow:
-                inset 0 -6px 12px rgba(0,0,0,0.6),
-                inset 0 3px 6px rgba(200,255,220,0.35),
-                0 0 25px rgba(120,255,150,0.4),
-                0 6px 12px rgba(0,0,0,0.6);
-            border: 1px solid rgba(0,0,0,0.5);
-        }
-        .banker-lamp .stem {
-            position: absolute;
-            top: 26px; left: 50%;
-            transform: translateX(-50%);
-            width: 6px;
-            height: 58px;
-            background: linear-gradient(90deg, #6b4f10 0%, #ffdb70 45%, #c9a961 55%, #6b4f10 100%);
-            border-radius: 2px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.6);
-        }
-        .banker-lamp .base {
-            position: absolute;
-            bottom: 0; left: 50%;
-            transform: translateX(-50%);
-            width: 44px;
-            height: 12px;
-            background:
-                radial-gradient(ellipse at 30% 30%, #ffdb70 0%, #c9a961 40%, #8b6914 100%);
-            border-radius: 50%;
-            box-shadow:
-                inset 0 -2px 4px rgba(0,0,0,0.5),
-                0 6px 10px rgba(0,0,0,0.7);
-        }
-        .banker-lamp .glow {
-            position: absolute;
-            top: 8px; left: 50%;
-            transform: translateX(-50%);
-            width: 130px;
-            height: 130px;
-            background: radial-gradient(ellipse at 50% 30%, rgba(160,255,180,0.35) 0%, rgba(120,220,140,0.15) 30%, transparent 60%);
-            pointer-events: none;
-            z-index: -1;
-            filter: blur(6px);
-        }
-        @media (max-width: 767px) {
-            .banker-lamp { width: 60px; height: 78px; top: -50px; left: 10px; }
-            .banker-lamp .shade { width: 54px; height: 22px; }
-            .banker-lamp .stem { height: 42px; top: 18px; }
-            .banker-lamp .base { width: 32px; height: 10px; }
-        }
-
-        /* ===== GLOBO TERRÁQUEO (escritorio, lado derecho) ===== */
-        .desk-globe {
-            position: absolute;
-            right: 20px;
-            top: -80px;
-            z-index: 4;
-            width: 82px;
-            height: 110px;
-            pointer-events: none;
-        }
-        .desk-globe .sphere {
-            position: absolute;
-            top: 0; left: 50%;
-            transform: translateX(-50%);
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            background:
-                /* Continentes en verde/marrón sobre océano azul antiguo */
-                radial-gradient(ellipse at 30% 40%, #2d5a3f 0%, transparent 22%),
-                radial-gradient(ellipse at 65% 35%, #3d6b45 0%, transparent 18%),
-                radial-gradient(ellipse at 50% 65%, #4a3a20 0%, transparent 20%),
-                radial-gradient(ellipse at 25% 70%, #2d5a3f 0%, transparent 16%),
-                radial-gradient(ellipse at 80% 55%, #3d6b45 0%, transparent 14%),
-                radial-gradient(circle at 30% 25%, rgba(255,255,255,0.35) 0%, transparent 30%),
-                radial-gradient(circle at 50% 50%, #3a6b8a 0%, #1e4560 60%, #0d2438 100%);
-            box-shadow:
-                inset -6px -6px 20px rgba(0,0,0,0.6),
-                inset 5px 5px 10px rgba(255,255,255,0.15),
-                0 8px 15px rgba(0,0,0,0.55),
-                0 0 20px rgba(80,140,180,0.2);
-            border: 1px solid rgba(0,0,0,0.4);
-        }
-        .desk-globe .axis {
-            position: absolute;
-            top: -6px; left: 50%;
-            transform: translateX(-50%) rotate(20deg);
-            width: 3px;
-            height: 90px;
-            background: linear-gradient(180deg, #ffdb70 0%, #c9a961 50%, #8b6914 100%);
-            border-radius: 2px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.6);
-            z-index: -1;
-        }
-        .desk-globe .stand {
-            position: absolute;
-            bottom: 0; left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 14px;
-            background: radial-gradient(ellipse at 30% 30%, #ffdb70 0%, #c9a961 45%, #8b6914 100%);
-            border-radius: 50%;
-            box-shadow:
-                inset 0 -2px 4px rgba(0,0,0,0.5),
-                0 6px 10px rgba(0,0,0,0.7);
-        }
-        @media (max-width: 767px) {
-            .desk-globe { width: 56px; height: 76px; top: -60px; right: 10px; }
-            .desk-globe .sphere { width: 50px; height: 50px; }
-            .desk-globe .axis { height: 64px; }
-            .desk-globe .stand { width: 30px; height: 10px; }
-        }
-
-        /* ===== BANDERA CHILENA PEQUEÑA SOBRE ESCRITORIO ===== */
-        .desk-flag {
-            position: absolute;
-            top: -32px;
-            left: 50%;
-            transform: translateX(-50%) translateX(85px);
-            z-index: 6;
-            width: 36px;
-            height: 48px;
-            pointer-events: none;
-        }
-        .desk-flag .fabric {
-            position: absolute;
-            top: 0; left: 6px;
-            width: 30px;
-            height: 20px;
-            background:
-                radial-gradient(circle at 20% 30%, #fff 1.5px, transparent 2px),
-                linear-gradient(180deg, #0033a0 50%, transparent 50%),
-                linear-gradient(180deg, #fff 0%, #fff 50%, #d52b1e 50%, #d52b1e 100%);
-            background-size: 40% 50%, 40% 100%, 100% 100%;
-            background-position: 0 0, 0 0, 0 0;
-            background-repeat: no-repeat;
-            border: 1px solid rgba(0,0,0,0.4);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.55);
-        }
-        .desk-flag .pole {
-            position: absolute;
-            top: 0; left: 4px;
-            width: 3px;
-            height: 48px;
-            background: linear-gradient(90deg, #6b4f10 0%, #ffdb70 45%, #c9a961 55%, #6b4f10 100%);
-            border-radius: 2px;
-            box-shadow: 0 2px 3px rgba(0,0,0,0.6);
-        }
-        .desk-flag .pole::before {
-            content: '';
-            position: absolute;
-            top: -4px; left: -1.5px;
-            width: 6px; height: 6px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #ffdb70 0%, #8b6914 100%);
-        }
-        @media (max-width: 767px) {
-            .desk-flag { display: none; }
         }
 
         /* ===== OBJETOS SOBRE EL ESCRITORIO ===== */
@@ -1471,57 +1171,9 @@
 <body>
 
     <div class="wood-wall"></div>
-    <div class="bookshelf left"></div>
-    <div class="bookshelf right"></div>
     <div class="ambient"></div>
     <div class="ambient-side"></div>
     <div class="vignette"></div>
-
-    <!-- ESCUDO NACIONAL DE CHILE (izquierda) -->
-    <div class="coat-of-arms" aria-hidden="true">
-        <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <linearGradient id="shield" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stop-color="#3366cc"/>
-                    <stop offset="0.5" stop-color="#0033a0"/>
-                    <stop offset="0.5" stop-color="#d52b1e"/>
-                    <stop offset="1" stop-color="#7a1a12"/>
-                </linearGradient>
-                <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stop-color="#ffdb70"/>
-                    <stop offset="0.5" stop-color="#c9a961"/>
-                    <stop offset="1" stop-color="#8b6914"/>
-                </linearGradient>
-            </defs>
-            <!-- Escudo azul/rojo -->
-            <path d="M 20 25 L 80 25 L 80 55 Q 80 90 50 105 Q 20 90 20 55 Z"
-                  fill="url(#shield)" stroke="url(#gold)" stroke-width="2.5"/>
-            <!-- Estrella blanca al centro -->
-            <polygon points="50,42 53,50 61,50 55,55 57,63 50,58 43,63 45,55 39,50 47,50"
-                     fill="#fff" stroke="#c9a961" stroke-width="0.4"/>
-            <!-- Cinta con lema -->
-            <path d="M 12 108 Q 50 100 88 108 L 88 118 Q 50 110 12 118 Z"
-                  fill="url(#gold)" stroke="#6b4f10" stroke-width="0.6"/>
-            <text x="50" y="116" font-family="Cinzel, serif" font-size="4.5" font-weight="700"
-                  text-anchor="middle" fill="#3a1c0c">POR LA RAZON O LA FUERZA</text>
-            <!-- Cóndor (izq) — silueta simple -->
-            <path d="M 8 45 Q 4 55 8 68 Q 14 60 18 68 L 20 62 Q 14 50 8 45"
-                  fill="#2a1a10" opacity="0.85"/>
-            <!-- Huemul (der) — silueta simple -->
-            <path d="M 92 45 Q 96 55 92 68 Q 86 60 82 68 L 80 62 Q 86 50 92 45"
-                  fill="#5c3a1c" opacity="0.85"/>
-            <!-- Penachos rojo/azul/blanco arriba -->
-            <path d="M 30 22 Q 35 10 42 20" fill="none" stroke="#d52b1e" stroke-width="2.5"/>
-            <path d="M 42 20 Q 50 8 58 20" fill="none" stroke="#fff" stroke-width="2.5"/>
-            <path d="M 58 20 Q 65 10 70 22" fill="none" stroke="#0033a0" stroke-width="2.5"/>
-        </svg>
-    </div>
-
-    <!-- BANDERAS CHILENAS (derecha) -->
-    <div class="chile-flags" aria-hidden="true">
-        <div class="chile-flag"></div>
-        <div class="chile-flag f2"></div>
-    </div>
 
     <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
         <i id="theme-icon" class="ph ph-sun"></i>
@@ -1623,27 +1275,6 @@
             <div class="desk-edge"></div>
             <div class="desk-top"></div>
             <div class="desk-front">
-                <!-- LÁMPARA VERDE DE BANQUERO (izq) -->
-                <div class="banker-lamp" aria-hidden="true">
-                    <div class="glow"></div>
-                    <div class="shade"></div>
-                    <div class="stem"></div>
-                    <div class="base"></div>
-                </div>
-
-                <!-- GLOBO TERRÁQUEO (der) -->
-                <div class="desk-globe" aria-hidden="true">
-                    <div class="axis"></div>
-                    <div class="sphere"></div>
-                    <div class="stand"></div>
-                </div>
-
-                <!-- BANDERA CHILENA PEQUEÑA -->
-                <div class="desk-flag" aria-hidden="true">
-                    <div class="pole"></div>
-                    <div class="fabric"></div>
-                </div>
-
                 <div class="person-holder">
                     <div class="chair-back"></div>
                     <div class="person-photo">
