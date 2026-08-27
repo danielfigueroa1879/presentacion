@@ -454,32 +454,58 @@
                 gap: 0;
                 pointer-events: auto;
             }
-            /* Coordenadas medidas sobre la foto (porcentajes del muro) */
-            html.scene-on .diploma-unit:nth-child(1) { left: 31.50%; top: 4.85%;  width: 12.10%; height: 27.70%; }
-            html.scene-on .diploma-unit:nth-child(2) { left: 44.85%; top: 3.25%;  width: 14.30%; height: 31.90%; }
-            html.scene-on .diploma-unit:nth-child(3) { left: 60.40%; top: 5.10%;  width: 12.10%; height: 27.20%; }
-            html.scene-on .diploma-unit:nth-child(4) { left: 33.60%; top: 36.40%; width: 12.50%; height: 19.80%; }
-            html.scene-on .diploma-unit:nth-child(5) { left: 57.60%; top: 36.40%; width: 12.50%; height: 19.80%; }
+            /* Vano interior de cada marco de la foto (porcentajes del muro).
+               El diploma se monta DENTRO del marco que ya trae la imagen;
+               no dibujamos molduras encima. */
+            html.scene-on .diploma-unit:nth-child(1) { left: 32.55%; top: 6.80%;  width: 10.15%; height: 23.80%; }
+            html.scene-on .diploma-unit:nth-child(2) { left: 46.05%; top: 5.30%;  width: 11.90%; height: 27.60%; }
+            html.scene-on .diploma-unit:nth-child(3) { left: 61.55%; top: 7.00%;  width:  9.90%; height: 23.10%; }
+            html.scene-on .diploma-unit:nth-child(4) { left: 34.40%; top: 38.10%; width: 10.80%; height: 16.70%; }
+            html.scene-on .diploma-unit:nth-child(5) { left: 58.55%; top: 38.10%; width: 10.90%; height: 16.70%; }
 
-            /* El marco ocupa todo el hueco del muro y el paspartú rellena el resto */
+            /* Respetamos el marco dorado de la foto: nuestra unidad no dibuja
+               moldura, solo ocupa el vano con su paspartú y el diploma. */
             html.scene-on .diploma-unit .diploma-frame {
                 height: 100%;
-                padding: 0.85vw;
-                border-radius: 2px;
-                box-shadow:
-                    0 1.1vw 2.2vw -0.6vw rgba(0,0,0,0.85),
-                    inset 0 1px 1px rgba(255,238,180,0.8),
-                    inset 0 -2px 3px rgba(80,55,10,0.7);
+                padding: 0;
+                border-radius: 0;
+                background: none;
+                box-shadow: none;
+                transition: filter 0.3s;
             }
-            html.scene-on .diploma-unit .diploma-frame::before { inset: 0.55vw; border-width: 1px; }
+            html.scene-on .diploma-unit .diploma-frame::before,
+            html.scene-on .diploma-unit .diploma-frame::after { display: none; }
+
+            /* Paspartú que cubre por completo el papel que traía la foto */
             html.scene-on .diploma-unit .diploma-content {
                 height: 100%;
-                padding: 0.7vw;
+                padding: 0.28vw;
+                border-radius: 0;
+                background: linear-gradient(180deg, #f7efdc 0%, #eadfc5 55%, #ded0ac 100%);
+                box-shadow:
+                    inset 0 0 0 1px rgba(90,62,18,0.55),
+                    inset 0 0.25vw 0.5vw rgba(0,0,0,0.28),
+                    inset 0 -0.15vw 0.3vw rgba(255,255,255,0.45);
             }
-            html.scene-on .diploma-unit .diploma-content::before { inset: 0.4vw; box-shadow: 0 0 0 2px #efe3c4; }
+            html.scene-on .diploma-unit .diploma-content::before { display: none; }
+            /* El diploma se monta sobre el paspartú, como una lámina enmarcada:
+               el crema queda a la vista alrededor y no un bloque blanco. */
             html.scene-on .diploma-unit .diploma-image-wrap {
                 aspect-ratio: auto;
                 height: 100%;
+                background: transparent;
+                box-shadow: none;
+            }
+            html.scene-on .diploma-unit .diploma-image-wrap img {
+                filter: drop-shadow(0 0.1vw 0.28vw rgba(0,0,0,0.45));
+            }
+            /* Reflejo suave del vidrio, dentro del vano */
+            html.scene-on .diploma-unit .diploma-image-wrap::after {
+                background: linear-gradient(118deg,
+                    rgba(255,255,255,0.30) 0%,
+                    rgba(255,255,255,0.06) 26%,
+                    rgba(255,255,255,0) 52%,
+                    rgba(255,255,255,0.12) 100%);
             }
             html.scene-on .diploma-unit .diploma-zoom-icon {
                 top: 0.6vw; right: 0.6vw;
@@ -499,7 +525,8 @@
             html.scene-on .diploma-unit .frame-hint {
                 display: block;
                 position: absolute;
-                top: calc(100% + 0.4vw);
+                /* Baja lo justo para despejar la moldura del marco de la foto */
+                top: calc(100% + 1.5vw);
                 left: 50%;
                 transform: translateX(-50%) translateY(-4px);
                 white-space: nowrap;
@@ -521,12 +548,16 @@
                 opacity: 1;
                 transform: translateX(-50%) translateY(0);
             }
-            /* Al pasar el mouse, el cuadro se adelanta un poco sobre el muro */
-            html.scene-on .diploma-unit .diploma-frame:hover {
-                transform: scale(1.045);
-                z-index: 3;
+            /* Al pasar el mouse el cuadro se ilumina; no se escala, porque
+               movería el diploma fuera del marco que trae la foto. */
+            html.scene-on .diploma-unit .diploma-frame { transform: none; }
+            html.scene-on .diploma-unit:hover .diploma-frame,
+            html.scene-on .diploma-unit:focus-visible .diploma-frame {
+                transform: none;
+                filter: brightness(1.09) drop-shadow(0 0 0.9vw rgba(255,214,120,0.75));
             }
             html.scene-on .diploma-unit:hover { z-index: 3; }
+            html.scene-on .diploma-unit:focus-visible { outline: none; z-index: 3; }
 
             /* El cuadro enfocado recupera su tamaño grande y se centra
                en pantalla, igual que sin la foto (paso 1 de la interacción) */
@@ -547,15 +578,38 @@
                 height: auto;
                 padding: 18px;
                 transform: none;
+                filter: none;
+                border-radius: 3px;
+                background:
+                    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='300'><defs><filter id='g'><feTurbulence type='fractalNoise' baseFrequency='1.6 0.5' numOctaves='2' seed='9'/><feColorMatrix values='0 0 0 0 0.55 0 0 0 0 0.42 0 0 0 0 0.15 0 0 0 0.26 0'/></filter></defs><rect width='200' height='300' filter='url(%23g)'/></svg>"),
+                    linear-gradient(135deg,
+                        #8b6914 0%, #c9a961 14%, #ffdb70 28%,
+                        #f2d478 44%, #c9a961 60%, #b8860b 78%, #6b4f10 100%);
+                background-size: 200px 300px, auto;
                 box-shadow:
                     0 26px 45px -14px rgba(0,0,0,0.9),
                     inset 0 2px 2px rgba(255,238,180,0.8),
                     inset 0 -3px 5px rgba(80,55,10,0.7);
             }
+            html.scene-on .diploma-unit.active .diploma-frame::before,
+            html.scene-on .diploma-unit.active .diploma-frame::after { display: block; }
             html.scene-on .diploma-unit.active .diploma-frame::before { inset: 12px; border-width: 2px; }
-            html.scene-on .diploma-unit.active .diploma-content { height: auto; padding: 22px; }
-            html.scene-on .diploma-unit.active .diploma-content::before { inset: 13px; box-shadow: 0 0 0 3px #efe3c4, 0 0 0 4px rgba(139,105,20,0.5); }
-            html.scene-on .diploma-unit.active .diploma-image-wrap { aspect-ratio: 4 / 3; height: auto; }
+            html.scene-on .diploma-unit.active .diploma-content {
+                height: auto;
+                padding: 22px;
+                box-shadow: inset 0 0 26px rgba(139,105,20,0.16), inset 0 3px 6px rgba(0,0,0,0.18);
+            }
+            html.scene-on .diploma-unit.active .diploma-content::before { display: block; inset: 13px; box-shadow: 0 0 0 3px #efe3c4, 0 0 0 4px rgba(139,105,20,0.5); }
+            html.scene-on .diploma-unit.active .diploma-image-wrap {
+                aspect-ratio: 4 / 3;
+                height: auto;
+                background: #fff;
+                box-shadow:
+                    inset 0 0 0 1px rgba(0,0,0,0.28),
+                    0 0 0 1px rgba(139,105,20,0.4),
+                    0 4px 10px rgba(0,0,0,0.3);
+            }
+            html.scene-on .diploma-unit.active .diploma-image-wrap img { filter: none; }
             html.scene-on .diploma-unit.active .diploma-zoom-icon {
                 opacity: 1;
                 top: 16px; right: 16px;
