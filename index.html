@@ -415,6 +415,201 @@
             .diploma-unit:nth-child(5) { grid-column: 4 / span 2; width: auto; margin-inline: 0; }
         }
 
+        /* =========================================================
+           ESCENA REAL DEL DESPACHO (foto de fondo, muro vacío)
+           Nuestros marcos de nogal se cuelgan sobre el muro de la foto
+           conservando exactamente la misma interacción (acercar → lupa).
+           ========================================================= */
+        .office-photo, .office-front { display: none; }
+        .frame-hint { display: none; }
+
+        @media (min-width: 900px) {
+            /* La foto se muestra de borde a borde */
+            html.scene-on .office-photo {
+                display: block;
+                width: 100vw;
+                margin-left: calc(50% - 50vw);
+                height: auto;
+                border-bottom: 4px solid rgba(20,10,4,0.85);
+                box-shadow: 0 26px 60px rgba(0,0,0,0.75);
+            }
+            html.scene-on .wall-section { padding: 0 0 34px; }
+            /* Capa de posicionamiento sobre la foto (1698x926 → alto = ancho/1.8337) */
+            html.scene-on .frames-grid {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: calc(50% - 50vw);
+                width: 100vw;
+                height: calc(100vw / 1.8337);
+                gap: 0;
+                pointer-events: none;
+            }
+            html.scene-on .diploma-unit {
+                position: absolute;
+                display: block;
+                width: auto; height: auto;
+                margin: 0;
+                gap: 0;
+                pointer-events: auto;
+            }
+            /* Colocación sobre el muro vacío: 3 arriba, 2 flanqueando la cabeza */
+            html.scene-on .diploma-unit:nth-child(1) { left: 31.20%; top:  5.4%; width: 12.6%; height: 25.6%; }
+            html.scene-on .diploma-unit:nth-child(2) { left: 44.70%; top:  5.4%; width: 12.6%; height: 25.6%; }
+            html.scene-on .diploma-unit:nth-child(3) { left: 58.20%; top:  5.4%; width: 12.6%; height: 25.6%; }
+            html.scene-on .diploma-unit:nth-child(4) { left: 31.20%; top: 33.6%; width: 12.6%; height: 22.6%; }
+            html.scene-on .diploma-unit:nth-child(5) { left: 58.20%; top: 33.6%; width: 12.6%; height: 22.6%; }
+
+            /* El marco de nogal llena la caja; el diploma llena el interior */
+            html.scene-on .diploma-unit .diploma-frame {
+                height: 100%;
+                padding: 0.9vw;
+                border-radius: 2px;
+                /* Sombra suave y contenida: no proyecta un triángulo sobre el muro */
+                box-shadow:
+                    0 0.5vw 1vw rgba(0,0,0,0.5),
+                    inset 0 2px 2px rgba(220,170,110,0.5),
+                    inset 0 -3px 4px rgba(0,0,0,0.7),
+                    inset 3px 0 3px rgba(0,0,0,0.35),
+                    inset -3px 0 3px rgba(0,0,0,0.5);
+                transition: transform 0.35s cubic-bezier(0.25,0.8,0.25,1), box-shadow 0.35s;
+            }
+            html.scene-on .diploma-unit .diploma-frame::before { inset: 0.55vw; }
+            html.scene-on .diploma-unit .diploma-content {
+                height: 100%;
+                padding: 0.7vw;
+                min-height: 0;
+            }
+            html.scene-on .diploma-unit .diploma-content::before { inset: 0.4vw; box-shadow: 0 0 0 2px #efe3c4; }
+            html.scene-on .diploma-unit .diploma-image-wrap {
+                aspect-ratio: auto;
+                height: 100%;
+            }
+            html.scene-on .diploma-unit .diploma-zoom-icon {
+                top: 0.6vw; right: 0.6vw;
+                width: 1.9vw; height: 1.9vw;
+                min-width: 22px; min-height: 22px;
+                font-size: 0.95vw;
+                opacity: 0;
+            }
+            html.scene-on .diploma-unit:hover .diploma-zoom-icon,
+            html.scene-on .diploma-unit:focus-visible .diploma-zoom-icon { opacity: 1; }
+
+            /* Sobre el muro no hay sitio para la placa: título al pasar el mouse */
+            html.scene-on .diploma-unit .title-plate { display: none; }
+            html.scene-on .diploma-unit .frame-hint {
+                display: block;
+                position: absolute;
+                top: calc(100% + 0.5vw);
+                left: 50%;
+                transform: translateX(-50%) translateY(-4px);
+                white-space: nowrap;
+                font-family: 'Cinzel', serif;
+                font-size: 0.8vw;
+                letter-spacing: 0.05em;
+                color: #ffe9b8;
+                background: rgba(18,10,4,0.86);
+                border: 1px solid rgba(242,212,120,0.5);
+                border-radius: 3px;
+                padding: 0.3vw 0.6vw;
+                opacity: 0;
+                pointer-events: none;
+                transition: opacity 0.25s, transform 0.25s;
+                z-index: 6;
+            }
+            html.scene-on .diploma-unit:hover .frame-hint,
+            html.scene-on .diploma-unit:focus-visible .frame-hint {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+            /* Al pasar el mouse, el cuadro se adelanta un poco */
+            html.scene-on .diploma-unit .diploma-frame:hover { transform: translateY(-0.5vw) scale(1.03); }
+            html.scene-on .diploma-unit:hover { z-index: 5; }
+            html.scene-on .diploma-unit:focus-visible { outline: none; z-index: 5; }
+
+            /* Persona, silla y escritorio POR DELANTE de los cuadros.
+               Alto natural (idéntico a la foto base) para que no haya costura
+               aunque el recorte cruce el muro. */
+            html.scene-on .office-front {
+                display: block;
+                position: absolute;
+                top: 0;
+                left: calc(50% - 50vw);
+                width: 100vw;
+                height: auto;
+                pointer-events: none;
+                z-index: 3;
+                clip-path: polygon(
+                    44.0% 39.0%, 57.5% 39.0%,
+                    60.0% 51.0%, 62.0% 64.0%, 67.0% 100%,
+                    33.0% 100%, 38.0% 64.0%, 40.5% 51.0%);
+            }
+
+            /* Con la foto puesta sobran la pared y los adornos dibujados */
+            html.scene-on .bookcase,
+            html.scene-on .crest,
+            html.scene-on .flags,
+            html.scene-on .wall-section::after,
+            html.scene-on .person-holder,
+            html.scene-on .banker-lamp,
+            html.scene-on .desk-globe { display: none; }
+            html.scene-on .desk-section { margin-top: 0; }
+            html.scene-on .desk-items { padding-top: 16px; }
+
+            /* El cuadro enfocado (paso 1) recupera su porte grande y centrado */
+            html.scene-on .diploma-unit.active {
+                position: fixed;
+                top: 50%; left: 50%;
+                transform: translate(-50%, -50%);
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+                width: min(90vw, 760px);
+                height: auto;
+                max-height: 92vh;
+                z-index: 100;
+                pointer-events: auto;
+            }
+            html.scene-on .diploma-unit.active .diploma-frame {
+                height: auto;
+                padding: clamp(14px, 2.8vw, 22px);
+                transform: none;
+            }
+            html.scene-on .diploma-unit.active .diploma-frame::before { inset: clamp(10px, 2vw, 16px); }
+            html.scene-on .diploma-unit.active .diploma-content { height: auto; padding: clamp(14px, 3vw, 22px); }
+            html.scene-on .diploma-unit.active .diploma-content::before { inset: clamp(8px, 1.8vw, 13px); box-shadow: 0 0 0 3px #efe3c4, 0 0 0 4px rgba(139,105,20,0.5); }
+            html.scene-on .diploma-unit.active .diploma-image-wrap { aspect-ratio: 4 / 3; height: auto; }
+            html.scene-on .diploma-unit.active .diploma-zoom-icon {
+                opacity: 1;
+                top: 16px; right: 16px;
+                width: 44px; height: 44px;
+                font-size: 20px;
+            }
+            html.scene-on .diploma-unit.active .frame-hint { display: none; }
+            html.scene-on .diploma-unit.active .title-plate {
+                display: block;
+                position: static;
+                transform: none;
+                width: 100%;
+                max-width: 520px;
+                margin: 0 auto;
+            }
+        }
+
+        /* En celular la foto va de cabecera y los cuadros quedan abajo, grandes */
+        @media (max-width: 899px) {
+            html.scene-on .office-photo {
+                display: block;
+                width: 100vw;
+                margin-left: calc(50% - 50vw);
+                height: auto;
+                margin-bottom: clamp(20px, 5vw, 30px);
+                border-top: 3px solid rgba(20,10,4,0.8);
+                border-bottom: 3px solid rgba(20,10,4,0.8);
+                box-shadow: 0 16px 34px rgba(0,0,0,0.6);
+            }
+        }
+
         /* Unidad = marco + placa con el título, siempre alineados */
         .diploma-unit {
             display: flex;
@@ -1285,6 +1480,12 @@
 
         <!-- ===== PARED CON LOS CUADROS (3 arriba · 2 abajo) ===== -->
         <section class="wall-section">
+            <!-- Foto real del despacho (muro vacío). Los cuadros se cuelgan encima. -->
+            <img id="office-photo" class="office-photo" alt="Despacho de Daniel Figueroa Chacama"
+                 width="1698" height="926" fetchpriority="high" decoding="async">
+            <!-- Copia de la misma foto recortada a la persona/silla: queda por delante -->
+            <img id="office-front" class="office-front" alt="" aria-hidden="true"
+                 width="1698" height="926" decoding="async">
             <div class="frames-grid">
 
                 <!-- Cuadro 1: Ingeniería en Informática -->
@@ -1540,6 +1741,47 @@
                 localStorage.theme = 'dark';
             }
             applyTheme();
+        });
+
+        /* ===== ESCENA REAL DEL DESPACHO =====
+           Si existe la foto del despacho, los marcos se cuelgan sobre su muro.
+           Si no está (o falla la descarga), la página vuelve sola a la pared
+           dibujada, sin perder ninguna funcionalidad. */
+        (function () {
+            const photo = document.getElementById('office-photo');
+            const front = document.getElementById('office-front');
+            if (!photo) return;
+            const candidatos = ['images/oficina.webp', 'images/oficina.png', 'images/oficina.jpg'];
+            let i = 0;
+
+            function activar() {
+                html.classList.add('scene-on');
+                if (front) front.src = photo.src;   // misma imagen, mismo caché
+            }
+            function siguiente() {
+                i++;
+                if (i < candidatos.length) {
+                    photo.src = candidatos[i] + '?v=7';
+                } else {
+                    html.classList.remove('scene-on');
+                    photo.remove();
+                    if (front) front.remove();
+                }
+            }
+            photo.addEventListener('load', activar);
+            photo.addEventListener('error', siguiente);
+            photo.src = candidatos[0] + '?v=7';
+            if (photo.complete && photo.naturalWidth > 0) activar();
+        })();
+
+        /* Etiqueta con el título al pasar el mouse por cada cuadro del muro */
+        document.querySelectorAll('.diploma-unit').forEach((unit) => {
+            const titulo = unit.querySelector('.plate-title');
+            if (!titulo) return;
+            const hint = document.createElement('span');
+            hint.className = 'frame-hint';
+            hint.textContent = titulo.textContent;
+            unit.appendChild(hint);
         });
 
         /* ===== VISOR DE DIPLOMA CON ZOOM (lupa) ===== */
