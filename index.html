@@ -14,7 +14,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <!-- Precarga el primer diploma para que abra más rápido -->
-    <link rel="preload" as="image" href="images/DIPLOMA DE INGENIERIA EN INFORMATICA.webp?v=6" fetchpriority="high">
+    <link rel="preload" as="image" href="images/DIPLOMA DE INGENIERIA EN INFORMATICA.webp?v=8" fetchpriority="high">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
+    <link rel="shortcut icon" href="favicon/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
+    <link rel="manifest" href="favicon/site.webmanifest" />
 
     <!-- Fuentes sin bloquear el primer render (swap + carga diferida) -->
     <link rel="stylesheet"
@@ -1495,7 +1502,7 @@
                         <div class="diploma-content">
                             <i class="ph ph-magnifying-glass-plus diploma-zoom-icon" aria-hidden="true"></i>
                             <div class="diploma-image-wrap">
-                                <img src="images/DIPLOMA DE INGENIERIA EN INFORMATICA.webp?v=6" alt="Diploma de Ingeniería en Informática"
+                                <img src="images/DIPLOMA DE INGENIERIA EN INFORMATICA.webp?v=8" alt="Diploma de Ingeniería en Informática"
                                      width="1700" height="1175" decoding="async" fetchpriority="high"
                                      onerror="this.style.display='none'">
                             </div>
@@ -1516,7 +1523,7 @@
                         <div class="diploma-content">
                             <i class="ph ph-magnifying-glass-plus diploma-zoom-icon" aria-hidden="true"></i>
                             <div class="diploma-image-wrap">
-                                <img src="images/DIPLOMA INGENIERO EN CIBERSEGURIDAD.webp?v=6" alt="Diploma de Ingeniero en Ciberseguridad"
+                                <img src="images/DIPLOMA INGENIERO EN CIBERSEGURIDAD.webp?v=8" alt="Diploma de Ingeniero en Ciberseguridad"
                                      width="1320" height="930" decoding="async" loading="lazy"
                                      onerror="this.style.display='none'">
                             </div>
@@ -1537,7 +1544,7 @@
                         <div class="diploma-content">
                             <i class="ph ph-magnifying-glass-plus diploma-zoom-icon" aria-hidden="true"></i>
                             <div class="diploma-image-wrap">
-                                <img src="images/DIPLOMADO EN GESTION DE SEGURIDAD PRIVADA.webp?v=6" alt="Diplomado en Gestión de Seguridad Privada"
+                                <img src="images/DIPLOMADO EN GESTION DE SEGURIDAD PRIVADA.webp?v=8" alt="Diplomado en Gestión de Seguridad Privada"
                                      width="1480" height="1291" decoding="async" loading="lazy"
                                      onerror="this.style.display='none'">
                             </div>
@@ -1558,7 +1565,7 @@
                         <div class="diploma-content">
                             <i class="ph ph-magnifying-glass-plus diploma-zoom-icon" aria-hidden="true"></i>
                             <div class="diploma-image-wrap">
-                                <img src="images/DiplomadoCibserguridad.webp?v=6" alt="Diplomado en Ciberseguridad — Instituto Profesional IACC"
+                                <img src="images/DiplomadoCibserguridad.webp?v=8" alt="Diplomado en Ciberseguridad — Instituto Profesional IACC"
                                      width="681" height="579" decoding="async" loading="lazy"
                                      onerror="this.style.display='none'">
                             </div>
@@ -1579,7 +1586,7 @@
                         <div class="diploma-content">
                             <i class="ph ph-magnifying-glass-plus diploma-zoom-icon" aria-hidden="true"></i>
                             <div class="diploma-image-wrap">
-                                <img src="images/condecoracion-20-anos.webp?v=6" alt="Condecoración por 20 años de servicio en Carabineros de Chile"
+                                <img src="images/condecoracion-20-anos.webp?v=8" alt="Condecoración por 20 años de servicio en Carabineros de Chile"
                                      width="484" height="676" decoding="async" loading="lazy"
                                      onerror="this.style.display='none'">
                             </div>
@@ -1616,7 +1623,7 @@
                 <div class="person-holder">
                     <div class="chair-back" aria-hidden="true"></div>
                     <div class="person-photo">
-                        <img src="images/daniel.webp?v=6" alt="Daniel Figueroa Chacama"
+                        <img src="images/daniel.webp?v=8" alt="Daniel Figueroa Chacama"
                              width="512" height="512" decoding="async" loading="lazy"
                              onerror="this.onerror=null;this.src='https://placehold.co/400x400/2a1810/f2d478?text=DF'">
                     </div>
@@ -1761,7 +1768,7 @@
             function siguiente() {
                 i++;
                 if (i < candidatos.length) {
-                    photo.src = candidatos[i] + '?v=7';
+                    photo.src = candidatos[i] + '?v=8';
                 } else {
                     html.classList.remove('scene-on');
                     photo.remove();
@@ -1770,7 +1777,7 @@
             }
             photo.addEventListener('load', activar);
             photo.addEventListener('error', siguiente);
-            photo.src = candidatos[0] + '?v=7';
+            photo.src = candidatos[0] + '?v=8';
             if (photo.complete && photo.naturalWidth > 0) activar();
         })();
 
